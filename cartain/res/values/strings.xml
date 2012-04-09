@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+/*
+ * Copyright 2012 akaiosorani(akaiosorani@gmail.com)
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
+ -->
+<resources>
+    <string name="app_name">Cartain</string>
+    <!-- common  -->
+    <string name="close_button">Close</string>
+    <string name="exit_button">Exit</string>
+
+    <!--  menu -->
+    <string name="menu_preferences">preferences</string>
+    
+    <!--  main activity -->
+    <string name="main_description">start up cartain tools</string>
+    <string name="main_start_button">Start</string>
+    <string name="main_stop_button">Stop</string>
+    <string name="main_message_already_starte">tool already started</string>
+    
+    <string name="bt_button_description">On/Off for Bluetooth functionality</string>
+    <string name="data_button_description">On/Off for 3G/4G data traffic</string>
+    <string name="wifi_button_description">On/Off for wifi functionality</string>
+    <string name="gps_button_description">Call for Gps setting screen</string>
+    <string name="manner_button_description">On/Off for manner mode</string>
+    <string name="autorotate_button_description">On/Off for auto screen rotation</string>
+    <string name="flight_button_description">On/Off for flight mode</string>
+    
+    <string name="brightness_hint">brightness(%)</string>
+
+    <!-- settings acitivity -->
+    <string name="auto_brightness">auto</string>
+    <string name="revert_brightness">revert brightness when closing</string>
+    <string name="brightness">brightness</string>
+    <string name="battery">battery</string>
+    
+    <!-- preferences -->
+    <string name="pref_general">Genral settings</string>
+    <string name="pref_title_startup">Startup on boot</string>
+    <string name="pref_summary_startup">whther start up on boot or not</string>
+    <string name="pref_key_startup">startup_on_boot</string>
+    <string name="pref_title_position_list">Icon position</string>
+    <string name="pref_summary_position_list">Specify icon position on the screen</string>
+    <string name="pref_brightness">Brightness settings</string>
+    <string name="pref_key_open_behavier">open_behavier</string>    
+    <string name="pref_title_open_behavier">Open behavier</string>    
+    <string name="pref_summary_open_behavier">Bright the screen when opening</string>    
+    <string name="pref_key_revert_brightness">revert_brightness</string>    
+    <string name="pref_title_revert_brightness">Revert brightness</string>    
+    <string name="pref_summary_revert_brightness">Revert screen brightness when closing</string>    
+</resources>

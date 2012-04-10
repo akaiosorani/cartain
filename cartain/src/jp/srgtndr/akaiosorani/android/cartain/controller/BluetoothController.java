@@ -40,4 +40,10 @@ public class BluetoothController {
 		return getAdapter(context).getState();
 	}
 	
+	public static boolean isDevice(Context context)
+	{
+		BluetoothAdapter adapter = getAdapter(context);
+		return adapter != null;
+	}
+	
 }

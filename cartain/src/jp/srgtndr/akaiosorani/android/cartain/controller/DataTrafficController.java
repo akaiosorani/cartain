@@ -18,7 +18,6 @@ package jp.srgtndr.akaiosorani.android.cartain.controller;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.util.Log;
 
 public class DataTrafficController {
 
@@ -31,41 +30,32 @@ public class DataTrafficController {
 		return manager;
 	}
 	
-	public static void test(Context context)
+	private static NetworkInfo getNetworkInfo(Context context, int deviceType)
 	{
-		// mobile, WIFI, mobile_mms, mobile_dun, mobile_supl, mobile_hipri
-		ConnectivityManager manager = getManager(context);
-		NetworkInfo[] networks = manager.getAllNetworkInfo();
-		for(NetworkInfo info : networks)
-		{
-			Log.i("test", info.getTypeName());
-		}
-	}
-	
-	public static boolean isDevice(Context context, int deviceType) {
 		ConnectivityManager manager = getManager(context);
 		NetworkInfo[] networks = manager.getAllNetworkInfo();
 		for(NetworkInfo info : networks)
 		{
 			if (info.getType() == deviceType)  {
-				return true;
+				return info;
 			}
 		}
-		return false;
+		return null;
+	}
+	
+	public static boolean isDevice(Context context, int deviceType) {
+		NetworkInfo info = getNetworkInfo(context, deviceType);
+		return (info != null) && info.isAvailable();
 	}
 	
 	public static NetworkInfo.State getState(Context context, int deviceType)
 	{
-		ConnectivityManager manager = getManager(context);
-		NetworkInfo[] networks = manager.getAllNetworkInfo();
-		for(NetworkInfo info : networks)
+		NetworkInfo info = getNetworkInfo(context, deviceType);
+		if (info == null) 
 		{
-			if (info.getType() == deviceType)  {
-				info.getState();
-			}
+			return NetworkInfo.State.UNKNOWN;
 		}
-		manager.startUsingNetworkFeature(ConnectivityManager.TYPE_MOBILE, FEATURE_ENABLE);
-		return NetworkInfo.State.UNKNOWN;
+		return info.getState();
 	}
 	
 	public static int setMobileEnabled(Context context)

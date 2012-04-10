@@ -93,14 +93,13 @@ public class CartainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cartain);
         originalBrightness = BrightnessUtil.getSystemBrightness(getContentResolver());
-        int percent = 100;
+        int percent = 50;
         int value = percentToValue(percent);
         if (value >= originalBrightness) {
         	setBrightness(percent, true);
         } else {
-        	SeekBar bar = (SeekBar)findViewById(R.id.brightness_slider);
         	percent = valueToPercent(originalBrightness);
-        	bar.setProgress(percent);
+        	setBrightnessInfo(percent, true);
         }
 		TextView text = (TextView)findViewById(R.id.brightness_value);
 		text.setEnabled(false);
@@ -130,6 +129,10 @@ public class CartainActivity extends Activity {
 				}
 			}
 		});
+        if (!DataTrafficController.isDevice(this, ConnectivityManager.TYPE_MOBILE)) 
+        {
+        	setButtonEnabled(dataButton, false);
+        }
 
         // enable/disable Bluetooth
         ImageButton btButton = (ImageButton)findViewById(R.id.bt_button);
@@ -140,6 +143,10 @@ public class CartainActivity extends Activity {
 				BluetoothController.setEnabled(CartainActivity.this, !current);
 			}
 		});
+        if (!BluetoothController.isDevice(this)) 
+        {
+        	setButtonEnabled(btButton, false);
+        }
 
         // enable/disable Wifi
         ImageButton wifiButton = (ImageButton)findViewById(R.id.wifi_button);
@@ -152,6 +159,10 @@ public class CartainActivity extends Activity {
 				}
 			}
 		});
+        if (!WifiController.isWifiDevice(this))
+        {
+        	setButtonEnabled(wifiButton, false);
+        }
 
         // call setting screen for GPS
         ImageButton gpsButton = (ImageButton)findViewById(R.id.gps_button);
@@ -341,6 +352,11 @@ public class CartainActivity extends Activity {
     	sendMessage(CartainService.MSG_HIDE_CARTAIN);
     }
     
+    private void setButtonEnabled(ImageButton button, boolean enabled)
+    {
+    	button.setEnabled(enabled);
+    }
+    
     private void sendMessage(int msg)
     {
     	if (serviceMessenger == null) {
@@ -388,10 +404,15 @@ public class CartainActivity extends Activity {
     	unbindService(con);
     }
     
-    private void setBrightness(int percent, boolean isSetSeekbar) {
+    private void setBrightness(int percent, boolean updateSeekbar) {
     	int value = percentToValue(percent);
     	BrightnessUtil.setSystemBrightness(getContentResolver(), getWindow(), value);
-    	if (isSetSeekbar){
+    	setBrightnessInfo(percent, updateSeekbar);
+    }
+    
+    private void setBrightnessInfo(int percent, boolean updateSeekbar)
+    {
+    	if (updateSeekbar){
     		SeekBar bar = (SeekBar)findViewById(R.id.brightness_slider);
     		bar.setProgress(percent);
     	}

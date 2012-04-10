@@ -39,9 +39,8 @@ public class WifiController {
 		return getManager(context).getWifiState();
 	}
 	
-	public static boolean isWifiDevice()
+	public static boolean isWifiDevice(Context context)
 	{
-		
-		return false;
+		return getManager(context) != null;
 	}
 }

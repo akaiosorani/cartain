@@ -42,7 +42,7 @@ public class CartainView extends FrameLayout {
         params.gravity = Gravity.LEFT;
 
         TextView label = new TextView(context);
-        label.setText("★");
+        label.setText(" ");
         label.setTextSize(40);
         addView(label, params);
     }

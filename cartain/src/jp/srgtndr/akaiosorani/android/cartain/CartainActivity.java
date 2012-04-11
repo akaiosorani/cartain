@@ -94,7 +94,7 @@ public class CartainActivity extends Activity {
         setContentView(R.layout.cartain);
         originalBrightness = BrightnessUtil.getSystemBrightness(getContentResolver());
         Log.i("cartain", String.format("original brightness: %d", originalBrightness));
-        int percent = 50;
+        int percent = 60;
         int value = percentToValue(percent);
         if (value >= originalBrightness) {
             setBrightness(percent, true);
@@ -102,8 +102,6 @@ public class CartainActivity extends Activity {
             percent = valueToPercent(originalBrightness);
             setBrightnessInfo(percent, true);
         }
-        TextView text = (TextView)findViewById(R.id.brightness_value);
-        text.setEnabled(false);
 
         // start service 
         Intent service = new Intent(CartainActivity.this, CartainService.class);
@@ -423,7 +421,7 @@ public class CartainActivity extends Activity {
     private static int percentToValue(int percent)
     {
         int max = 255;
-        int min = 10;
+        int min = 5;
         int p = percent;
         p = (p>100) ? 100 : (p<0 ? 0 : p);
         
@@ -434,7 +432,7 @@ public class CartainActivity extends Activity {
     private static int valueToPercent(int value)
     {
         int max = 255;
-        int min = 10;
+        int min = 5;
         int p = (int)(100.0 * (value - min) / (max - min));
         p = (p > 100.0f) ? 100 : (p < 1 ? 1 : p);
         return p;

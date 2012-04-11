@@ -108,6 +108,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:gravity="right|center"
+        android:enabled="false"
+        android:focusable="false"
         android:minWidth="50dp"
         android:maxWidth="100dp" />
   </LinearLayout>

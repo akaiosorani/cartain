@@ -65,9 +65,9 @@ public class CartainActivity extends Activity {
     final Messenger messnger = new Messenger(new IncomingHandler());
 
     Messenger serviceMessenger;
-   
+
     boolean showPreference = false;
-    
+
     private int originalBrightness;
 
     /**
@@ -92,6 +92,8 @@ public class CartainActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cartain);
+
+        // brightness setting when opening
         originalBrightness = BrightnessUtil.getSystemBrightness(getContentResolver());
         Log.i("cartain", String.format("original brightness: %d", originalBrightness));
         int percent = 60;
@@ -213,7 +215,8 @@ public class CartainActivity extends Activity {
                 // TODO receive state and change button enabled
             }
         });
-        
+
+        // set seekbar handler for brightness cotnrol
         SeekBar brightnessSlider = (SeekBar)findViewById(R.id.brightness_slider);
         brightnessSlider.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
@@ -245,6 +248,7 @@ public class CartainActivity extends Activity {
                 finish();
             }
         });
+
         // exit this application
         Button exitButton = (Button)findViewById(R.id.exit_button);
         exitButton.setOnClickListener(new OnClickListener() {
@@ -255,12 +259,14 @@ public class CartainActivity extends Activity {
                 finish();
             }
         });
-        
+
+        // set background transparency
         Window w = getWindow();
         WindowManager.LayoutParams params = w.getAttributes();
         params.alpha = 0.85f;
         w.setAttributes(params);
-        
+
+        // set animation for opening
         TranslateAnimation animation = 
                 new TranslateAnimation(
                     Animation.RELATIVE_TO_PARENT, -1.0f,
@@ -272,7 +278,7 @@ public class CartainActivity extends Activity {
         View rootView = findViewById(R.id.main);
         rootView.startAnimation(animation);
     }
-    
+
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         if(hasFocus || showPreference)
@@ -284,23 +290,23 @@ public class CartainActivity extends Activity {
         }
         super.onWindowFocusChanged(hasFocus);
     }
-    
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unbindService();
     }
-    
+
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
     }
-    
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
     }
-    
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(getString(R.string.menu_preferences));
@@ -312,7 +318,7 @@ public class CartainActivity extends Activity {
         showPreference = true;
         return super.onMenuOpened(featureId, menu);
     }
-    
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getTitle().equals(getString(R.string.menu_preferences))) {
@@ -322,38 +328,59 @@ public class CartainActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }    
-    
+
     @Override
     public void onOptionsMenuClosed(Menu menu) {
         showPreference = false;
         super.onOptionsMenuClosed(menu);
     }
 
+    /**
+     * add icon for launch 
+     */
     private void startCartain()
     {
         sendMessage(CartainService.MSG_START_CARTAIN);
     }
 
+    /**
+     * remove icon for launch
+     */
     private void stopCartain()
     {
         sendMessage(CartainService.MSG_STOP_CARTAIN);
     }
 
+    /**
+     * overlay icon for launch
+     */
     private void showCartain()
     {
         sendMessage(CartainService.MSG_SHOW_CARTAIN);
     }
 
+    /**
+     * hide icon for launch
+     */
     private void hideCartain()
     {
         sendMessage(CartainService.MSG_HIDE_CARTAIN);
     }
 
+    /**
+     * utility method for button enable/disable
+     * @param button
+     * @param enabled
+     */
     private void setButtonEnabled(ImageButton button, boolean enabled)
     {
         button.setEnabled(enabled);
     }
 
+    /**
+     * send message to a service to control overlay icon
+     * @param msg action type of message
+     */
     private void sendMessage(int msg)
     {
         if (serviceMessenger == null) {

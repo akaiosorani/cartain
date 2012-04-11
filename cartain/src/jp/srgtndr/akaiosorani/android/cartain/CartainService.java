@@ -29,19 +29,19 @@ import android.view.View.OnTouchListener;
 public class CartainService extends Service {
 
     static final int MSG_START_CARTAIN = 1;
-    
+
     static final int MSG_STOP_CARTAIN = 2;
-    
+
     static final int MSG_SHOW_CARTAIN = 3;
-    
+
     static final int MSG_HIDE_CARTAIN = 4;
-    
+
     static final int MSG_CHECK_CARTAIN = 5;
-    
+
     private static final String VIEW_CONTROL = "view_control";
-    
+
     private boolean alreadyStarted = false;
-    
+
     private final Messenger messenger = new Messenger(new IncomingHandler());
 
     class IncomingHandler extends Handler {
@@ -68,7 +68,7 @@ public class CartainService extends Service {
             }
         }
     }
-    
+
     @Override
     public void onCreate()
     {
@@ -80,12 +80,12 @@ public class CartainService extends Service {
     {
         CartainView.destroyView(getApplicationContext());
     }
-    
+
     @Override
     public IBinder onBind(Intent intent) {
         return messenger.getBinder();
     }
-    
+
     private void startCartain()
     {
         synchronized (VIEW_CONTROL) {
@@ -101,7 +101,7 @@ public class CartainService extends Service {
             alreadyStarted = true;
         }
     }
-    
+
     private void stopCartain()
     {
         synchronized (VIEW_CONTROL) {
@@ -109,7 +109,7 @@ public class CartainService extends Service {
             alreadyStarted = false;
         }
     }
-    
+
     private void showCartain()
     {
         if(!alreadyStarted) {
@@ -117,7 +117,7 @@ public class CartainService extends Service {
         }
         CartainView.show();
     }
-    
+
     private void hideCartain()
     {
         if(!alreadyStarted) {

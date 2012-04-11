@@ -35,7 +35,7 @@ public class ScreenRotationController {
         }
         return current == 1 ? true : false;
     }
-    
+
     public static void setAutoRotationEnabled(ContentResolver resolver, boolean enabled)
     {
         Settings.System.putInt(resolver, Settings.System.ACCELEROMETER_ROTATION, enabled ? 1 : 0);

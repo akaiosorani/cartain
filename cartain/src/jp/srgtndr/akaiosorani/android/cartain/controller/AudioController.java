@@ -25,13 +25,13 @@ public class AudioController {
         AudioManager audioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
         return audioManager;
     }
-    
+
     public static boolean isRinger(Context context)
     {
         AudioManager audioManager = getManager(context);
         return !(audioManager.getRingerMode() == AudioManager.RINGER_MODE_SILENT);
     }
-    
+
     public static void setEnabled(Context context, boolean enable)
     {
         AudioManager audioManager = getManager(context);

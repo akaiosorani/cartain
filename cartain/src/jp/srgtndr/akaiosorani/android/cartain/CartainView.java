@@ -28,12 +28,12 @@ import android.widget.TextView;
 public class CartainView extends FrameLayout {
 
     private static CartainView view = null;
-    
+
     CartainView(Context context) {
         super(context);
         setLayout(context);
     }
-    
+
     protected void setLayout(Context context)
     {
         setBackgroundColor(Color.GREEN);
@@ -51,7 +51,7 @@ public class CartainView extends FrameLayout {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
     }
-        
+
     public static CartainView createView(Context context) {
         CartainView v = new CartainView(context);
         WindowManager wm = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
@@ -71,7 +71,7 @@ public class CartainView extends FrameLayout {
         view = v;
         return v;
     }
-    
+
     public static void destroyView(Context context)
     {
         if (view==null) return;
@@ -79,7 +79,7 @@ public class CartainView extends FrameLayout {
         // TODO fix error
         wm.removeView(view);
     }
-    
+
     public static void show()
     {
         if(view==null){
@@ -87,7 +87,7 @@ public class CartainView extends FrameLayout {
         }
         view.setVisibility(View.VISIBLE);
     }
-    
+
     public static void hide()
     {
         if(view==null){

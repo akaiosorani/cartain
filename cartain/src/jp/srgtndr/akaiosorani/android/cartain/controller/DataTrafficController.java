@@ -23,13 +23,13 @@ public class DataTrafficController {
 
     private static String FEATURE_ENABLE = "enableHIPRI";
     private static String FEATURE_DISABLE = "disableHIPRI";
-    
+
     private static ConnectivityManager getManager(Context context)
     {
         ConnectivityManager manager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
         return manager;
     }
-    
+
     private static NetworkInfo getNetworkInfo(Context context, int deviceType)
     {
         ConnectivityManager manager = getManager(context);
@@ -42,12 +42,12 @@ public class DataTrafficController {
         }
         return null;
     }
-    
+
     public static boolean isDevice(Context context, int deviceType) {
         NetworkInfo info = getNetworkInfo(context, deviceType);
         return (info != null) && info.isAvailable();
     }
-    
+
     public static NetworkInfo.State getState(Context context, int deviceType)
     {
         NetworkInfo info = getNetworkInfo(context, deviceType);
@@ -57,12 +57,13 @@ public class DataTrafficController {
         }
         return info.getState();
     }
-    
+
     public static int setMobileEnabled(Context context)
     {
         ConnectivityManager manager = getManager(context);
         return manager.startUsingNetworkFeature(ConnectivityManager.TYPE_MOBILE, FEATURE_ENABLE);
     }
+
     public static int setMobileDisabled(Context context)
     {
         ConnectivityManager manager = getManager(context);

@@ -330,7 +330,7 @@ public class CartainActivity extends Activity {
         showPreference = false;
         super.onOptionsMenuClosed(menu);
     }
-        
+
     private void startCartain()
     {
         sendMessage(CartainService.MSG_START_CARTAIN);
@@ -340,22 +340,22 @@ public class CartainActivity extends Activity {
     {
         sendMessage(CartainService.MSG_STOP_CARTAIN);
     }
-    
+
     private void showCartain()
     {
         sendMessage(CartainService.MSG_SHOW_CARTAIN);
     }
-    
+
     private void hideCartain()
     {
         sendMessage(CartainService.MSG_HIDE_CARTAIN);
     }
-    
+
     private void setButtonEnabled(ImageButton button, boolean enabled)
     {
         button.setEnabled(enabled);
     }
-    
+
     private void sendMessage(int msg)
     {
         if (serviceMessenger == null) {
@@ -372,7 +372,7 @@ public class CartainActivity extends Activity {
             e.printStackTrace();
         }
     }
-    
+
     ServiceConnection con = new ServiceConnection() {
         @Override
         public void onServiceDisconnected(ComponentName name) {
@@ -430,7 +430,7 @@ public class CartainActivity extends Activity {
         double value = min + ((max - min) / 100.0 * p);
         return (int)Math.floor(value);
     }
-    
+
     private static int valueToPercent(int value)
     {
         int max = 255;
@@ -439,5 +439,5 @@ public class CartainActivity extends Activity {
         p = (p > 100.0f) ? 100 : (p < 1 ? 1 : p);
         return p;
     }
-    
+
 }

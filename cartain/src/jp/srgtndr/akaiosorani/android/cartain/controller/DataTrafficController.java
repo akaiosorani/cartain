@@ -21,51 +21,51 @@ import android.net.NetworkInfo;
 
 public class DataTrafficController {
 
-	private static String FEATURE_ENABLE = "enableHIPRI";
-	private static String FEATURE_DISABLE = "disableHIPRI";
-	
-	private static ConnectivityManager getManager(Context context)
-	{
-		ConnectivityManager manager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
-		return manager;
-	}
-	
-	private static NetworkInfo getNetworkInfo(Context context, int deviceType)
-	{
-		ConnectivityManager manager = getManager(context);
-		NetworkInfo[] networks = manager.getAllNetworkInfo();
-		for(NetworkInfo info : networks)
-		{
-			if (info.getType() == deviceType)  {
-				return info;
-			}
-		}
-		return null;
-	}
-	
-	public static boolean isDevice(Context context, int deviceType) {
-		NetworkInfo info = getNetworkInfo(context, deviceType);
-		return (info != null) && info.isAvailable();
-	}
-	
-	public static NetworkInfo.State getState(Context context, int deviceType)
-	{
-		NetworkInfo info = getNetworkInfo(context, deviceType);
-		if (info == null) 
-		{
-			return NetworkInfo.State.UNKNOWN;
-		}
-		return info.getState();
-	}
-	
-	public static int setMobileEnabled(Context context)
-	{
-		ConnectivityManager manager = getManager(context);
-		return manager.startUsingNetworkFeature(ConnectivityManager.TYPE_MOBILE, FEATURE_ENABLE);
-	}
-	public static int setMobileDisabled(Context context)
-	{
-		ConnectivityManager manager = getManager(context);
-		return manager.stopUsingNetworkFeature(ConnectivityManager.TYPE_MOBILE, FEATURE_DISABLE);
-	}
+    private static String FEATURE_ENABLE = "enableHIPRI";
+    private static String FEATURE_DISABLE = "disableHIPRI";
+    
+    private static ConnectivityManager getManager(Context context)
+    {
+        ConnectivityManager manager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        return manager;
+    }
+    
+    private static NetworkInfo getNetworkInfo(Context context, int deviceType)
+    {
+        ConnectivityManager manager = getManager(context);
+        NetworkInfo[] networks = manager.getAllNetworkInfo();
+        for(NetworkInfo info : networks)
+        {
+            if (info.getType() == deviceType)  {
+                return info;
+            }
+        }
+        return null;
+    }
+    
+    public static boolean isDevice(Context context, int deviceType) {
+        NetworkInfo info = getNetworkInfo(context, deviceType);
+        return (info != null) && info.isAvailable();
+    }
+    
+    public static NetworkInfo.State getState(Context context, int deviceType)
+    {
+        NetworkInfo info = getNetworkInfo(context, deviceType);
+        if (info == null) 
+        {
+            return NetworkInfo.State.UNKNOWN;
+        }
+        return info.getState();
+    }
+    
+    public static int setMobileEnabled(Context context)
+    {
+        ConnectivityManager manager = getManager(context);
+        return manager.startUsingNetworkFeature(ConnectivityManager.TYPE_MOBILE, FEATURE_ENABLE);
+    }
+    public static int setMobileDisabled(Context context)
+    {
+        ConnectivityManager manager = getManager(context);
+        return manager.stopUsingNetworkFeature(ConnectivityManager.TYPE_MOBILE, FEATURE_DISABLE);
+    }
 }

@@ -20,22 +20,22 @@ import android.media.AudioManager;
 
 public class AudioController {
 
-	private static AudioManager getManager(Context context)
-	{
-		AudioManager audioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
-		return audioManager;
-	}
-	
-	public static boolean isRinger(Context context)
-	{
-		AudioManager audioManager = getManager(context);
-		return !(audioManager.getRingerMode() == AudioManager.RINGER_MODE_SILENT);
-	}
-	
-	public static void setEnabled(Context context, boolean enable)
-	{
-		AudioManager audioManager = getManager(context);
-		int mode = enable ? AudioManager.RINGER_MODE_NORMAL : AudioManager.RINGER_MODE_SILENT;
-		audioManager.setRingerMode(mode);
-	}
+    private static AudioManager getManager(Context context)
+    {
+        AudioManager audioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
+        return audioManager;
+    }
+    
+    public static boolean isRinger(Context context)
+    {
+        AudioManager audioManager = getManager(context);
+        return !(audioManager.getRingerMode() == AudioManager.RINGER_MODE_SILENT);
+    }
+    
+    public static void setEnabled(Context context, boolean enable)
+    {
+        AudioManager audioManager = getManager(context);
+        int mode = enable ? AudioManager.RINGER_MODE_NORMAL : AudioManager.RINGER_MODE_SILENT;
+        audioManager.setRingerMode(mode);
+    }
 }

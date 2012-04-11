@@ -47,8 +47,8 @@ public class BrightnessUtil {
   }
 
   public static void setSystemBrightness(ContentResolver resolver, Window window, int brightnessUnits) {
-	  setSystemBrightness(resolver, brightnessUnits);
-	  setActivityBrightness(window, brightnessUnits);
+      setSystemBrightness(resolver, brightnessUnits);
+      setActivityBrightness(window, brightnessUnits);
   }
   
   

@@ -24,7 +24,7 @@ import android.preference.PreferenceManager;
 
 public class Preferences extends PreferenceActivity {
 
-	private static SharedPreferences getSharedPreferences(Context context) {
+    private static SharedPreferences getSharedPreferences(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context);
     }
 

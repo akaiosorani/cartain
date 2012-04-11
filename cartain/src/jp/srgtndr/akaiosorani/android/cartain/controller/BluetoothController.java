@@ -20,30 +20,30 @@ import android.content.Context;
 
 public class BluetoothController {
 
-	private static BluetoothAdapter getAdapter(Context context)
-	{
-		return BluetoothAdapter.getDefaultAdapter();
-	}
-	
-	public static boolean setEnabled(Context context, boolean enabled)
-	{
-		BluetoothAdapter adapter = getAdapter(context);
-		return enabled ? adapter.enable() : adapter.disable();
-	}
-	public static boolean isEnabled(Context context)
-	{
-		return getAdapter(context).isEnabled();
-	}
-	
-	public static int getState(Context context)
-	{
-		return getAdapter(context).getState();
-	}
-	
-	public static boolean isDevice(Context context)
-	{
-		BluetoothAdapter adapter = getAdapter(context);
-		return adapter != null;
-	}
-	
+    private static BluetoothAdapter getAdapter(Context context)
+    {
+        return BluetoothAdapter.getDefaultAdapter();
+    }
+    
+    public static boolean setEnabled(Context context, boolean enabled)
+    {
+        BluetoothAdapter adapter = getAdapter(context);
+        return enabled ? adapter.enable() : adapter.disable();
+    }
+    public static boolean isEnabled(Context context)
+    {
+        return getAdapter(context).isEnabled();
+    }
+    
+    public static int getState(Context context)
+    {
+        return getAdapter(context).getState();
+    }
+    
+    public static boolean isDevice(Context context)
+    {
+        BluetoothAdapter adapter = getAdapter(context);
+        return adapter != null;
+    }
+    
 }

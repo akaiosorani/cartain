@@ -75,17 +75,17 @@ public class CartainActivity extends Activity {
      * @author akaiosorani
      */
     class IncomingHandler extends Handler {
-    	@Override
-    	public void handleMessage(Message msg) {
-    		switch(msg.what){
-    		case CartainService.MSG_CHECK_CARTAIN:
-    			// 
-    			break;
-    		default:
-        	    super.handleMessage(msg);
-    			break;
-    		}
-    	}
+        @Override
+        public void handleMessage(Message msg) {
+            switch(msg.what){
+            case CartainService.MSG_CHECK_CARTAIN:
+                // 
+                break;
+            default:
+                super.handleMessage(msg);
+                break;
+            }
+        }
     }
 
     @Override
@@ -93,16 +93,17 @@ public class CartainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cartain);
         originalBrightness = BrightnessUtil.getSystemBrightness(getContentResolver());
+        Log.i("cartain", String.format("original brightness: %d", originalBrightness));
         int percent = 50;
         int value = percentToValue(percent);
         if (value >= originalBrightness) {
-        	setBrightness(percent, true);
+            setBrightness(percent, true);
         } else {
-        	percent = valueToPercent(originalBrightness);
-        	setBrightnessInfo(percent, true);
+            percent = valueToPercent(originalBrightness);
+            setBrightnessInfo(percent, true);
         }
-		TextView text = (TextView)findViewById(R.id.brightness_value);
-		text.setEnabled(false);
+        TextView text = (TextView)findViewById(R.id.brightness_value);
+        text.setEnabled(false);
 
         // start service 
         Intent service = new Intent(CartainActivity.this, CartainService.class);
@@ -112,152 +113,150 @@ public class CartainActivity extends Activity {
         // setting for 3g/4g data
         ImageButton dataButton = (ImageButton)findViewById(R.id.data_button);
         dataButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				NetworkInfo.State state = DataTrafficController.getState(CartainActivity.this, ConnectivityManager.TYPE_MOBILE);
-				if (state == NetworkInfo.State.UNKNOWN) {
-					return;
-				}
-				int result;
-				if (state == NetworkInfo.State.CONNECTED) {
-					result = DataTrafficController.setMobileDisabled(CartainActivity.this);
-				}else{
-					result = DataTrafficController.setMobileEnabled(CartainActivity.this);
-				}
-				if (result != -1) {
-					Log.i("cartain", "mobile state change success!");
-				}
-			}
-		});
+            @Override
+            public void onClick(View v) {
+                NetworkInfo.State state = DataTrafficController.getState(CartainActivity.this, ConnectivityManager.TYPE_MOBILE);
+                if (state == NetworkInfo.State.UNKNOWN) {
+                    return;
+                }
+                int result;
+                if (state == NetworkInfo.State.CONNECTED) {
+                    result = DataTrafficController.setMobileDisabled(CartainActivity.this);
+                }else{
+                    result = DataTrafficController.setMobileEnabled(CartainActivity.this);
+                }
+                if (result != -1) {
+                    Log.i("cartain", "mobile state change success!");
+                }
+            }
+        });
         if (!DataTrafficController.isDevice(this, ConnectivityManager.TYPE_MOBILE)) 
         {
-        	setButtonEnabled(dataButton, false);
+            setButtonEnabled(dataButton, false);
         }
 
         // enable/disable Bluetooth
         ImageButton btButton = (ImageButton)findViewById(R.id.bt_button);
         btButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				boolean current = BluetoothController.isEnabled(CartainActivity.this);
-				BluetoothController.setEnabled(CartainActivity.this, !current);
-			}
-		});
+            @Override
+            public void onClick(View v) {
+                boolean current = BluetoothController.isEnabled(CartainActivity.this);
+                BluetoothController.setEnabled(CartainActivity.this, !current);
+            }
+        });
         if (!BluetoothController.isDevice(this)) 
         {
-        	setButtonEnabled(btButton, false);
+            setButtonEnabled(btButton, false);
         }
 
         // enable/disable Wifi
         ImageButton wifiButton = (ImageButton)findViewById(R.id.wifi_button);
         wifiButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				boolean current = WifiController.isEnabled(CartainActivity.this);
-				boolean result = WifiController.setEnabled(CartainActivity.this, !current);
-				if (result) {
-				}
-			}
-		});
+            @Override
+            public void onClick(View v) {
+                boolean current = WifiController.isEnabled(CartainActivity.this);
+                boolean result = WifiController.setEnabled(CartainActivity.this, !current);
+                if (result) {
+                }
+            }
+        });
         if (!WifiController.isWifiDevice(this))
         {
-        	setButtonEnabled(wifiButton, false);
+            setButtonEnabled(wifiButton, false);
         }
 
         // call setting screen for GPS
         ImageButton gpsButton = (ImageButton)findViewById(R.id.gps_button);
         gpsButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// TODO check gps available device
-				startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-			}
-		});
+            @Override
+            public void onClick(View v) {
+                // TODO check gps available device
+                startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+            }
+        });
 
         // enable/disable speaker
         ImageButton mannerButton = (ImageButton)findViewById(R.id.manner_button);
         mannerButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				AudioController.setEnabled(CartainActivity.this, !AudioController.isRinger(CartainActivity.this));
-			}
-		});
+            @Override
+            public void onClick(View v) {
+                AudioController.setEnabled(CartainActivity.this, !AudioController.isRinger(CartainActivity.this));
+            }
+        });
 
         // enable/disable auto rotation screen
         ImageButton rotationButton = (ImageButton)findViewById(R.id.autorotate_button);
         rotationButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				boolean current = ScreenRotationController.getAutoRotationEnabled(getContentResolver());
-				ScreenRotationController.setAutoRotationEnabled(getContentResolver(), !current);
-			}
-		});
+            @Override
+            public void onClick(View v) {
+                boolean current = ScreenRotationController.getAutoRotationEnabled(getContentResolver());
+                ScreenRotationController.setAutoRotationEnabled(getContentResolver(), !current);
+            }
+        });
 
         // enable/disable flight mode
         ImageButton flightModeButton = (ImageButton)findViewById(R.id.flight_button);
         flightModeButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				int current = 0;
-				try {
-	                current = Settings.System.getInt(getContentResolver(), Settings.System.AIRPLANE_MODE_ON);
+            @Override
+            public void onClick(View v) {
+                int current = 0;
+                try {
+                    current = Settings.System.getInt(getContentResolver(), Settings.System.AIRPLANE_MODE_ON);
                 } catch (SettingNotFoundException e) {
-                	// TODO error handling
-	                e.printStackTrace();
-	                return;
+                    // TODO error handling
+                    e.printStackTrace();
+                    return;
                 }
-				int settingValue = current > 0 ? 0 : 1;
-				Settings.System.putInt(getContentResolver(), Settings.System.AIRPLANE_MODE_ON, settingValue);
-			    Intent intent = new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);
-			    intent.putExtra("state", settingValue);
-			    sendBroadcast(intent);
-			    // TODO receive state and change button enabled
-			}
-		});
+                int settingValue = current > 0 ? 0 : 1;
+                Settings.System.putInt(getContentResolver(), Settings.System.AIRPLANE_MODE_ON, settingValue);
+                Intent intent = new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);
+                intent.putExtra("state", settingValue);
+                sendBroadcast(intent);
+                // TODO receive state and change button enabled
+            }
+        });
         
         SeekBar brightnessSlider = (SeekBar)findViewById(R.id.brightness_slider);
         brightnessSlider.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
-			@Override
-			public void onStopTrackingTouch(SeekBar seekBar) {
-			}
-			
-			@Override
-			public void onStartTrackingTouch(SeekBar seekBar) {
-			}
-			
-			@Override
-			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-				setBrightness(progress+1, false);
-			}
-		});
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+            
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+            
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                setBrightness(progress+1, false);
+            }
+        });
 
         // close this activity
         Button closeButton = (Button)findViewById(R.id.close_button);
         closeButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				CheckBox revertClosing = (CheckBox)findViewById(R.id.revert_brightness);
-				if (revertClosing.isChecked()) {
-					int current = BrightnessUtil.getSystemBrightness(getContentResolver());
-					if (current > originalBrightness)
-					{
-			        	BrightnessUtil.setSystemBrightness(getContentResolver(), getWindow(), originalBrightness);
-					}
-				}
-				startCartain();
-				finish();
-			}
-		});
+            @Override
+            public void onClick(View v) {
+                CheckBox revertClosing = (CheckBox)findViewById(R.id.revert_brightness);
+                Log.i("cartain", String.format("original brightness: %d current: %d", originalBrightness, BrightnessUtil.getSystemBrightness(getContentResolver())));
+                if (revertClosing.isChecked()) {
+                    BrightnessUtil.setSystemBrightness(getContentResolver(), getWindow(), originalBrightness);
+                }
+                startCartain();
+                Log.i("cartain", String.format("current: %d", BrightnessUtil.getSystemBrightness(getContentResolver())));
+                finish();
+            }
+        });
         // exit this application
         Button exitButton = (Button)findViewById(R.id.exit_button);
         exitButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				stopCartain();
-				// TODO stop service
-				finish();
-			}
-		});
+            @Override
+            public void onClick(View v) {
+                stopCartain();
+                // TODO stop service
+                finish();
+            }
+        });
         
         Window w = getWindow();
         WindowManager.LayoutParams params = w.getAttributes();
@@ -266,10 +265,10 @@ public class CartainActivity extends Activity {
         
         TranslateAnimation animation = 
                 new TranslateAnimation(
-            		Animation.RELATIVE_TO_PARENT, -1.0f,
-            		Animation.RELATIVE_TO_PARENT, 0.0f, 
-            		Animation.RELATIVE_TO_PARENT, 0.0f,
-            		Animation.RELATIVE_TO_PARENT, 0.0f);
+                    Animation.RELATIVE_TO_PARENT, -1.0f,
+                    Animation.RELATIVE_TO_PARENT, 0.0f, 
+                    Animation.RELATIVE_TO_PARENT, 0.0f,
+                    Animation.RELATIVE_TO_PARENT, 0.0f);
         animation.setDuration(200);
         animation.setFillAfter(true);
         View rootView = findViewById(R.id.main);
@@ -278,13 +277,13 @@ public class CartainActivity extends Activity {
     
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
-    	if(hasFocus || showPreference)
-    	{
-    		hideCartain();
-    	}else
-    	{
-    		showCartain();
-    	}
+        if(hasFocus || showPreference)
+        {
+            hideCartain();
+        }else
+        {
+            showCartain();
+        }
         super.onWindowFocusChanged(hasFocus);
     }
     
@@ -312,7 +311,7 @@ public class CartainActivity extends Activity {
 
     @Override
     public boolean onMenuOpened(int featureId, Menu menu) {
-    	showPreference = true;
+        showPreference = true;
         return super.onMenuOpened(featureId, menu);
     }
     
@@ -328,71 +327,71 @@ public class CartainActivity extends Activity {
     
     @Override
     public void onOptionsMenuClosed(Menu menu) {
-    	showPreference = false;
+        showPreference = false;
         super.onOptionsMenuClosed(menu);
     }
         
     private void startCartain()
     {
-    	sendMessage(CartainService.MSG_START_CARTAIN);
+        sendMessage(CartainService.MSG_START_CARTAIN);
     }
 
     private void stopCartain()
     {
-    	sendMessage(CartainService.MSG_STOP_CARTAIN);
+        sendMessage(CartainService.MSG_STOP_CARTAIN);
     }
     
     private void showCartain()
     {
-    	sendMessage(CartainService.MSG_SHOW_CARTAIN);
+        sendMessage(CartainService.MSG_SHOW_CARTAIN);
     }
     
     private void hideCartain()
     {
-    	sendMessage(CartainService.MSG_HIDE_CARTAIN);
+        sendMessage(CartainService.MSG_HIDE_CARTAIN);
     }
     
     private void setButtonEnabled(ImageButton button, boolean enabled)
     {
-    	button.setEnabled(enabled);
+        button.setEnabled(enabled);
     }
     
     private void sendMessage(int msg)
     {
-    	if (serviceMessenger == null) {
-    		return;
-    	}
-    	
-		Message message = Message.obtain();
-		message.replyTo = messnger;
-		message.what = msg;
-		try {
-	        serviceMessenger.send(message);
+        if (serviceMessenger == null) {
+            return;
+        }
+        
+        Message message = Message.obtain();
+        message.replyTo = messnger;
+        message.what = msg;
+        try {
+            serviceMessenger.send(message);
         } catch (RemoteException e) {
-	        // TODO Auto-generated catch block
-	        e.printStackTrace();
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
     
-	ServiceConnection con = new ServiceConnection() {
-		@Override
-		public void onServiceDisconnected(ComponentName name) {
-		}
-		
-		@Override
-		public void onServiceConnected(ComponentName name, IBinder service) {
-			serviceMessenger = new Messenger(service);
-			Message message = Message.obtain();
-			message.replyTo = messnger;
-			message.what = CartainService.MSG_CHECK_CARTAIN;
-			try {
-	            serviceMessenger.send(message);
+    ServiceConnection con = new ServiceConnection() {
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+        }
+        
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            serviceMessenger = new Messenger(service);
+            Message message = Message.obtain();
+            message.replyTo = messnger;
+            message.what = CartainService.MSG_CHECK_CARTAIN;
+            try {
+                serviceMessenger.send(message);
             } catch (RemoteException e) {
-	            // TODO Auto-generated catch block
-	            e.printStackTrace();
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
-		}
-	};
+        }
+    };
 
     private void bindService()
     {
@@ -401,24 +400,24 @@ public class CartainActivity extends Activity {
 
     private void unbindService()
     {
-    	unbindService(con);
+        unbindService(con);
     }
-    
+
     private void setBrightness(int percent, boolean updateSeekbar) {
-    	int value = percentToValue(percent);
-    	BrightnessUtil.setSystemBrightness(getContentResolver(), getWindow(), value);
-    	setBrightnessInfo(percent, updateSeekbar);
+        int value = percentToValue(percent);
+        BrightnessUtil.setSystemBrightness(getContentResolver(), getWindow(), value);
+        setBrightnessInfo(percent, updateSeekbar);
     }
-    
+
     private void setBrightnessInfo(int percent, boolean updateSeekbar)
     {
-    	if (updateSeekbar){
-    		SeekBar bar = (SeekBar)findViewById(R.id.brightness_slider);
-    		bar.setProgress(percent);
-    	}
-		TextView text = (TextView)findViewById(R.id.brightness_value);
-		String t = Integer.toString(percent);
-		text.setText(t);
+        if (updateSeekbar){
+            SeekBar bar = (SeekBar)findViewById(R.id.brightness_slider);
+            bar.setProgress(percent);
+        }
+        TextView text = (TextView)findViewById(R.id.brightness_value);
+        String t = Integer.toString(percent);
+        text.setText(t);
     }
 
     private static int percentToValue(int percent)
@@ -426,7 +425,7 @@ public class CartainActivity extends Activity {
         int max = 255;
         int min = 10;
         int p = percent;
-        p = (p>100) ? 100 : (p<0) ? 0 : p;
+        p = (p>100) ? 100 : (p<0 ? 0 : p);
         
         double value = min + ((max - min) / 100.0 * p);
         return (int)Math.floor(value);

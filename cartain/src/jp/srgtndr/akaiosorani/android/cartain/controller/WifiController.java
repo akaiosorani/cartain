@@ -20,27 +20,27 @@ import android.net.wifi.WifiManager;
 
 public class WifiController {
 
-	private static WifiManager getManager(Context context)
-	{
-		WifiManager manager = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
-		return manager;
-	}
-	public static boolean setEnabled(Context context, boolean enabled) 
-	{
-		return getManager(context).setWifiEnabled(enabled);
-	}
-	
-	public static boolean isEnabled(Context context)
-	{
-		return getManager(context).isWifiEnabled();
-	}
-	
-	public static int getCurrentState(Context context) {
-		return getManager(context).getWifiState();
-	}
-	
-	public static boolean isWifiDevice(Context context)
-	{
-		return getManager(context) != null;
-	}
+    private static WifiManager getManager(Context context)
+    {
+        WifiManager manager = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
+        return manager;
+    }
+    public static boolean setEnabled(Context context, boolean enabled) 
+    {
+        return getManager(context).setWifiEnabled(enabled);
+    }
+    
+    public static boolean isEnabled(Context context)
+    {
+        return getManager(context).isWifiEnabled();
+    }
+    
+    public static int getCurrentState(Context context) {
+        return getManager(context).getWifiState();
+    }
+    
+    public static boolean isWifiDevice(Context context)
+    {
+        return getManager(context) != null;
+    }
 }

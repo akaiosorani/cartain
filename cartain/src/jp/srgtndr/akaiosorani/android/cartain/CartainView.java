@@ -27,19 +27,19 @@ import android.widget.TextView;
 
 public class CartainView extends FrameLayout {
 
-	private static CartainView view = null;
-	
-	CartainView(Context context) {
-		super(context);
-		setLayout(context);
-	}
-	
-	protected void setLayout(Context context)
-	{
-		setBackgroundColor(Color.GREEN);
+    private static CartainView view = null;
+    
+    CartainView(Context context) {
+        super(context);
+        setLayout(context);
+    }
+    
+    protected void setLayout(Context context)
+    {
+        setBackgroundColor(Color.GREEN);
 
-		LayoutParams params = this.generateDefaultLayoutParams();
-		params.gravity = Gravity.LEFT;
+        LayoutParams params = this.generateDefaultLayoutParams();
+        params.gravity = Gravity.LEFT;
 
         TextView label = new TextView(context);
         label.setText("★");
@@ -47,52 +47,52 @@ public class CartainView extends FrameLayout {
         addView(label, params);
     }
 
-	@Override
-	protected void onDraw(Canvas canvas) {
-		super.onDraw(canvas);
-	}
-		
-	public static CartainView createView(Context context) {
-		CartainView v = new CartainView(context);
-		WindowManager wm = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+    }
+        
+    public static CartainView createView(Context context) {
+        CartainView v = new CartainView(context);
+        WindowManager wm = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
 
-		WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-				50, 50, 
-		        WindowManager.LayoutParams.TYPE_SYSTEM_ALERT, 
-		        WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | 
-		        WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL |
-		        WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,
-		        PixelFormat.TRANSLUCENT);
-		params.x = 0;
-		params.y = 0;
-		params.alpha = 0.3f;
-		params.gravity = Gravity.LEFT  |Gravity.CENTER_VERTICAL;
-		wm.addView(v, params);		
-		view = v;
-		return v;
-	}
-	
-	public static void destroyView(Context context)
-	{
-		if (view==null) return;
-		WindowManager wm = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
-		// TODO fix error
-		wm.removeView(view);
-	}
-	
-	public static void show()
-	{
-		if(view==null){
-			return;
-		}
-		view.setVisibility(View.VISIBLE);
-	}
-	
-	public static void hide()
-	{
-		if(view==null){
-			return;
-		}
-		view.setVisibility(View.INVISIBLE);
-	}
+        WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+                50, 50, 
+                WindowManager.LayoutParams.TYPE_SYSTEM_ALERT, 
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | 
+                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL |
+                WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,
+                PixelFormat.TRANSLUCENT);
+        params.x = 0;
+        params.y = 0;
+        params.alpha = 0.3f;
+        params.gravity = Gravity.LEFT  |Gravity.CENTER_VERTICAL;
+        wm.addView(v, params);        
+        view = v;
+        return v;
+    }
+    
+    public static void destroyView(Context context)
+    {
+        if (view==null) return;
+        WindowManager wm = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
+        // TODO fix error
+        wm.removeView(view);
+    }
+    
+    public static void show()
+    {
+        if(view==null){
+            return;
+        }
+        view.setVisibility(View.VISIBLE);
+    }
+    
+    public static void hide()
+    {
+        if(view==null){
+            return;
+        }
+        view.setVisibility(View.INVISIBLE);
+    }
 }

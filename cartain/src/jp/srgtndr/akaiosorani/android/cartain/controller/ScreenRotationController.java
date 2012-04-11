@@ -26,18 +26,18 @@ import android.provider.Settings.SettingNotFoundException;
  */
 public class ScreenRotationController {
 
-	public static boolean getAutoRotationEnabled(ContentResolver resolver) {
-		int current = 0;
+    public static boolean getAutoRotationEnabled(ContentResolver resolver) {
+        int current = 0;
         try {
-	        current = Settings.System.getInt(resolver, Settings.System.ACCELEROMETER_ROTATION);
+            current = Settings.System.getInt(resolver, Settings.System.ACCELEROMETER_ROTATION);
         } catch (SettingNotFoundException e) {
-	        e.printStackTrace();
+            e.printStackTrace();
         }
-		return current == 1 ? true : false;
-	}
-	
-	public static void setAutoRotationEnabled(ContentResolver resolver, boolean enabled)
-	{
-		Settings.System.putInt(resolver, Settings.System.ACCELEROMETER_ROTATION, enabled ? 1 : 0);
-	}
+        return current == 1 ? true : false;
+    }
+    
+    public static void setAutoRotationEnabled(ContentResolver resolver, boolean enabled)
+    {
+        Settings.System.putInt(resolver, Settings.System.ACCELEROMETER_ROTATION, enabled ? 1 : 0);
+    }
 }

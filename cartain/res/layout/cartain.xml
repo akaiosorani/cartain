@@ -116,6 +116,7 @@
   </LinearLayout>
   <CheckBox android:id="@+id/revert_brightness"
       android:text="@string/revert_brightness"
+      android:checked="true"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content" />
   <LinearLayout

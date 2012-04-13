@@ -95,7 +95,7 @@ public class CartainActivity extends Activity {
 
         // brightness setting when opening
         originalBrightness = BrightnessUtil.getSystemBrightness(getContentResolver());
-        Log.i("cartain", String.format("original brightness: %d", originalBrightness));
+        Log.d("cartain", String.format("original brightness: %d", originalBrightness));
         int percent = 60;
         int value = percentToValue(percent);
         if (value >= originalBrightness) {
@@ -126,7 +126,7 @@ public class CartainActivity extends Activity {
                     result = DataTrafficController.setMobileEnabled(CartainActivity.this);
                 }
                 if (result != -1) {
-                    Log.i("cartain", "mobile state change success!");
+                    Log.d("cartain", "mobile state change success!");
                 }
             }
         });
@@ -239,12 +239,12 @@ public class CartainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 CheckBox revertClosing = (CheckBox)findViewById(R.id.revert_brightness);
-                Log.i("cartain", String.format("original brightness: %d current: %d", originalBrightness, BrightnessUtil.getSystemBrightness(getContentResolver())));
+                Log.d("cartain", String.format("original brightness: %d current: %d", originalBrightness, BrightnessUtil.getSystemBrightness(getContentResolver())));
                 if (revertClosing.isChecked()) {
                     BrightnessUtil.setSystemBrightness(getContentResolver(), getWindow(), originalBrightness);
                 }
                 startCartain();
-                Log.i("cartain", String.format("current: %d", BrightnessUtil.getSystemBrightness(getContentResolver())));
+                Log.d("cartain", String.format("current: %d", BrightnessUtil.getSystemBrightness(getContentResolver())));
                 finish();
             }
         });

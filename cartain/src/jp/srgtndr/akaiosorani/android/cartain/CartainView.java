@@ -19,6 +19,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -67,7 +68,8 @@ public class CartainView extends FrameLayout {
         params.y = 0;
         params.alpha = 0.3f;
         params.gravity = Gravity.LEFT  |Gravity.CENTER_VERTICAL;
-        wm.addView(v, params);        
+        wm.addView(v, params);
+        Log.d("cartain", "add to wm");
         view = v;
         return v;
     }
@@ -78,6 +80,7 @@ public class CartainView extends FrameLayout {
         WindowManager wm = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
         // TODO fix error
         wm.removeView(view);
+        Log.d("cartain", "remove from WM");
     }
 
     public static void show()
@@ -86,6 +89,7 @@ public class CartainView extends FrameLayout {
             return;
         }
         view.setVisibility(View.VISIBLE);
+        Log.d("cartain", "show icon");
     }
 
     public static void hide()
@@ -94,5 +98,7 @@ public class CartainView extends FrameLayout {
             return;
         }
         view.setVisibility(View.INVISIBLE);
+        Log.d("cartain", "hide icon");
     }
+
 }

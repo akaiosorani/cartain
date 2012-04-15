@@ -17,6 +17,7 @@
 package jp.srgtndr.akaiosorani.android.cartain;
 
 import jp.srgtndr.akaiosorani.android.cartain.R;
+import jp.srgtndr.akaiosorani.android.cartain.controller.AirplaneModeController;
 import jp.srgtndr.akaiosorani.android.cartain.controller.AudioController;
 import jp.srgtndr.akaiosorani.android.cartain.controller.BluetoothController;
 import jp.srgtndr.akaiosorani.android.cartain.controller.DataTrafficController;
@@ -25,12 +26,16 @@ import jp.srgtndr.akaiosorani.android.cartain.controller.WifiController;
 import com.angrydoughnuts.android.brightprof.BrightnessUtil;
 
 import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -62,14 +67,15 @@ import android.widget.TextView;
  */
 public class CartainActivity extends Activity {
 
-    final Messenger messnger = new Messenger(new IncomingHandler());
+    private final Messenger messnger = new Messenger(new IncomingHandler());
 
-    Messenger serviceMessenger;
+    private Messenger serviceMessenger;
 
-    boolean showPreference = false;
+    private boolean showPreference = false;
 
     private int originalBrightness;
 
+    private BroadcastReceiver receiver;
     /**
      * Handle message for interaction cartain service
      * @author akaiosorani
@@ -199,20 +205,7 @@ public class CartainActivity extends Activity {
         flightModeButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                int current = 0;
-                try {
-                    current = Settings.System.getInt(getContentResolver(), Settings.System.AIRPLANE_MODE_ON);
-                } catch (SettingNotFoundException e) {
-                    // TODO error handling
-                    e.printStackTrace();
-                    return;
-                }
-                int settingValue = current > 0 ? 0 : 1;
-                Settings.System.putInt(getContentResolver(), Settings.System.AIRPLANE_MODE_ON, settingValue);
-                Intent intent = new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);
-                intent.putExtra("state", settingValue);
-                sendBroadcast(intent);
-                // TODO receive state and change button enabled
+                AirplaneModeController.changeAirplaneMode(CartainActivity.this);
             }
         });
 
@@ -260,6 +253,19 @@ public class CartainActivity extends Activity {
             }
         });
 
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Log.d("cartain", "Connectivity changed");
+                updateButtonStatus();
+            }
+        };
+        registerReceiver(receiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        registerReceiver(receiver, BluetoothController.getFilter());
+        registerReceiver(receiver, WifiController.getFilter());
+        registerReceiver(receiver, AirplaneModeController.getFilter());
+        updateButtonStatus();
+
         // set background transparency
         Window w = getWindow();
         WindowManager.LayoutParams params = w.getAttributes();
@@ -295,6 +301,7 @@ public class CartainActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         unbindService();
+        unregisterReceiver(receiver);
     }
 
     @Override
@@ -426,6 +433,19 @@ public class CartainActivity extends Activity {
     private void unbindService()
     {
         unbindService(con);
+    }
+
+    private void updateButtonStatus()
+    {
+        ImageButton dataButton = (ImageButton)findViewById(R.id.data_button);
+        ImageButton btButton = (ImageButton)findViewById(R.id.bt_button);
+        btButton.setImageResource(BluetoothController.isEnabled(this) ? R.drawable.bt2 : R.drawable.bt);
+        ImageButton wifiButton = (ImageButton)findViewById(R.id.wifi_button);
+        wifiButton.setImageResource(WifiController.isEnabled(this) ? R.drawable.wifi2 : R.drawable.wifi);
+        ImageButton gpsButton = (ImageButton)findViewById(R.id.gps_button);
+        ImageButton flightModeButton = (ImageButton)findViewById(R.id.flight_button);
+        flightModeButton.setImageResource(AirplaneModeController.isAirplaneModeOn(this) ? R.drawable.airplane2 : R.drawable.airplane);
+        ImageButton mannerButton = (ImageButton)findViewById(R.id.manner_button);
     }
 
     private void setBrightness(int percent, boolean updateSeekbar) {

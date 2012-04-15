@@ -17,6 +17,7 @@ package jp.srgtndr.akaiosorani.android.cartain.controller;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
+import android.content.IntentFilter;
 
 public class BluetoothController {
 
@@ -45,5 +46,10 @@ public class BluetoothController {
     {
         BluetoothAdapter adapter = getAdapter(context);
         return adapter != null;
+    }
+    
+    public static IntentFilter getFilter()
+    {
+        return new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
     }
 }

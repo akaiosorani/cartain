@@ -16,6 +16,7 @@
 package jp.srgtndr.akaiosorani.android.cartain.controller;
 
 import android.content.Context;
+import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
 
 public class WifiController {
@@ -43,5 +44,10 @@ public class WifiController {
     public static boolean isWifiDevice(Context context)
     {
         return getManager(context) != null;
+    }
+
+    public static IntentFilter getFilter()
+    {
+        return new IntentFilter(WifiManager.SUPPLICANT_STATE_CHANGED_ACTION);
     }
 }

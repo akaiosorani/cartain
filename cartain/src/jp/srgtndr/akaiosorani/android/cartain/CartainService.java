@@ -73,6 +73,7 @@ public class CartainService extends Service {
     public void onCreate()
     {
         Log.d("cartain", "service created");
+        startCartain();
     }
 
     @Override

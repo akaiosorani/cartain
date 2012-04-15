@@ -15,7 +15,8 @@
  */
 package jp.srgtndr.akaiosorani.android.cartain.controller;
 
-import android.content.ContentResolver;
+import android.content.Context;
+import android.content.IntentFilter;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 
@@ -26,18 +27,24 @@ import android.provider.Settings.SettingNotFoundException;
  */
 public class ScreenRotationController {
 
-    public static boolean getAutoRotationEnabled(ContentResolver resolver) {
+    public static boolean isAutoRotationEnabled(Context context) {
         int current = 0;
         try {
-            current = Settings.System.getInt(resolver, Settings.System.ACCELEROMETER_ROTATION);
+            current = Settings.System.getInt(context.getContentResolver(), Settings.System.ACCELEROMETER_ROTATION);
         } catch (SettingNotFoundException e) {
             e.printStackTrace();
         }
         return current == 1 ? true : false;
     }
 
-    public static void setAutoRotationEnabled(ContentResolver resolver, boolean enabled)
+    public static void setAutoRotationEnabled(Context context, boolean enabled)
     {
-        Settings.System.putInt(resolver, Settings.System.ACCELEROMETER_ROTATION, enabled ? 1 : 0);
+        Settings.System.putInt(context.getContentResolver(), Settings.System.ACCELEROMETER_ROTATION, enabled ? 1 : 0);
+    }
+
+    public static IntentFilter getFilter()
+    {
+        return null;
+//        return new IntentFilter("android.intent.action.SERVICE_STATE");
     }
 }

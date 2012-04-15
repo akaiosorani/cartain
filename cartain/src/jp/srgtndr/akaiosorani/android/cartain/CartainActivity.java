@@ -195,8 +195,8 @@ public class CartainActivity extends Activity {
         rotationButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean current = ScreenRotationController.getAutoRotationEnabled(getContentResolver());
-                ScreenRotationController.setAutoRotationEnabled(getContentResolver(), !current);
+                boolean current = ScreenRotationController.isAutoRotationEnabled(CartainActivity.this);
+                ScreenRotationController.setAutoRotationEnabled(CartainActivity.this, !current);
             }
         });
 
@@ -264,6 +264,7 @@ public class CartainActivity extends Activity {
         registerReceiver(receiver, BluetoothController.getFilter());
         registerReceiver(receiver, WifiController.getFilter());
         registerReceiver(receiver, AirplaneModeController.getFilter());
+//        registerReceiver(receiver, ScreenRotationController.getFilter());
         updateButtonStatus();
 
         // set background transparency
@@ -445,6 +446,7 @@ public class CartainActivity extends Activity {
         ImageButton gpsButton = (ImageButton)findViewById(R.id.gps_button);
         ImageButton flightModeButton = (ImageButton)findViewById(R.id.flight_button);
         flightModeButton.setImageResource(AirplaneModeController.isAirplaneModeOn(this) ? R.drawable.airplane2 : R.drawable.airplane);
+        ImageButton screenButton = (ImageButton)findViewById(R.id.autorotate_button);
         ImageButton mannerButton = (ImageButton)findViewById(R.id.manner_button);
     }
 

@@ -121,7 +121,7 @@ public class CartainActivity extends Activity {
         dataButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                NetworkInfo.State state = DataTrafficController.getState(CartainActivity.this, ConnectivityManager.TYPE_MOBILE);
+                NetworkInfo.State state = DataTrafficController.getState(CartainActivity.this);
                 if (state == NetworkInfo.State.UNKNOWN) {
                     return;
                 }
@@ -136,7 +136,7 @@ public class CartainActivity extends Activity {
                 }
             }
         });
-        if (!DataTrafficController.isDevice(this, ConnectivityManager.TYPE_MOBILE)) 
+        if (!DataTrafficController.isDevice(this)) 
         {
             setButtonEnabled(dataButton, false);
         }
@@ -260,7 +260,7 @@ public class CartainActivity extends Activity {
                 updateButtonStatus();
             }
         };
-        registerReceiver(receiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        registerReceiver(receiver, DataTrafficController.getFilter());
         registerReceiver(receiver, BluetoothController.getFilter());
         registerReceiver(receiver, WifiController.getFilter());
         registerReceiver(receiver, AirplaneModeController.getFilter());
@@ -439,6 +439,7 @@ public class CartainActivity extends Activity {
     private void updateButtonStatus()
     {
         ImageButton dataButton = (ImageButton)findViewById(R.id.data_button);
+        dataButton.setImageResource(DataTrafficController.isAvailable(this) ? R.drawable.data2 : R.drawable.data);
         ImageButton btButton = (ImageButton)findViewById(R.id.bt_button);
         btButton.setImageResource(BluetoothController.isEnabled(this) ? R.drawable.bt2 : R.drawable.bt);
         ImageButton wifiButton = (ImageButton)findViewById(R.id.wifi_button);

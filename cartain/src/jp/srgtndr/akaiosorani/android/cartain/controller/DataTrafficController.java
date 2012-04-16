@@ -16,13 +16,15 @@
 package jp.srgtndr.akaiosorani.android.cartain.controller;
 
 import android.content.Context;
+import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 public class DataTrafficController {
 
     private static String FEATURE_ENABLE = "enableHIPRI";
-    private static String FEATURE_DISABLE = "disableHIPRI";
+
+    private static int TARGET_DEVICE_TYPE = ConnectivityManager.TYPE_MOBILE;
 
     private static ConnectivityManager getManager(Context context)
     {
@@ -43,19 +45,21 @@ public class DataTrafficController {
         return null;
     }
 
-    public static boolean isDevice(Context context, int deviceType) {
-        NetworkInfo info = getNetworkInfo(context, deviceType);
+    public static boolean isAvailable(Context context) {
+        NetworkInfo info = getNetworkInfo(context, TARGET_DEVICE_TYPE);
         return (info != null) && info.isAvailable();
     }
 
-    public static NetworkInfo.State getState(Context context, int deviceType)
+    public static boolean isDevice(Context context)
     {
-        NetworkInfo info = getNetworkInfo(context, deviceType);
-        if (info == null) 
-        {
-            return NetworkInfo.State.UNKNOWN;
-        }
-        return info.getState();
+        NetworkInfo info = getNetworkInfo(context, TARGET_DEVICE_TYPE);
+        return (info != null);
+    }
+
+    public static NetworkInfo.State getState(Context context)
+    {
+        NetworkInfo info = getNetworkInfo(context, TARGET_DEVICE_TYPE);
+        return (info != null) ? info.getState() : NetworkInfo.State.UNKNOWN;
     }
 
     public static int setMobileEnabled(Context context)
@@ -67,6 +71,10 @@ public class DataTrafficController {
     public static int setMobileDisabled(Context context)
     {
         ConnectivityManager manager = getManager(context);
-        return manager.stopUsingNetworkFeature(ConnectivityManager.TYPE_MOBILE, FEATURE_DISABLE);
+        return manager.stopUsingNetworkFeature(ConnectivityManager.TYPE_MOBILE, FEATURE_ENABLE);
+    }
+    public static IntentFilter getFilter()
+    {
+        return new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
     }
 }

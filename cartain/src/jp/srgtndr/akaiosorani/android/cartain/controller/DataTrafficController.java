@@ -15,14 +15,16 @@
  */
 package jp.srgtndr.akaiosorani.android.cartain.controller;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 import android.content.Context;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.telephony.TelephonyManager;
 
 public class DataTrafficController {
-
-    private static String FEATURE_ENABLE = "enableHIPRI";
 
     private static int TARGET_DEVICE_TYPE = ConnectivityManager.TYPE_MOBILE;
 
@@ -62,17 +64,42 @@ public class DataTrafficController {
         return (info != null) ? info.getState() : NetworkInfo.State.UNKNOWN;
     }
 
-    public static int setMobileEnabled(Context context)
+    public static void setMobileEnabled(Context context)
     {
-        ConnectivityManager manager = getManager(context);
-        return manager.startUsingNetworkFeature(ConnectivityManager.TYPE_MOBILE, FEATURE_ENABLE);
+        TelephonyManager telephonyManager = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
+        boolean current = (telephonyManager.getDataState() == TelephonyManager.DATA_CONNECTED);
+
+        try {
+            Class telephonyManagerClass = Class.forName(telephonyManager.getClass().getName());
+            Method getITelephonyMethod = telephonyManagerClass.getDeclaredMethod("getITelephony");
+            getITelephonyMethod.setAccessible(true);
+            Object ITelephonyStub = getITelephonyMethod.invoke(telephonyManager);
+            Class ITelephonyClass = Class.forName(ITelephonyStub.getClass().getName());
+            String methodName = current ? "disableDataConnectivity" : "enableDataConnectivity";
+            Method dataConnSwitchmethod = ITelephonyClass.getDeclaredMethod(methodName);
+            dataConnSwitchmethod.setAccessible(true);
+            dataConnSwitchmethod.invoke(ITelephonyStub);
+        } catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (SecurityException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
-    public static int setMobileDisabled(Context context)
-    {
-        ConnectivityManager manager = getManager(context);
-        return manager.stopUsingNetworkFeature(ConnectivityManager.TYPE_MOBILE, FEATURE_ENABLE);
-    }
     public static IntentFilter getFilter()
     {
         return new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);

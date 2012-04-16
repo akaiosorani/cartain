@@ -21,6 +21,7 @@ import jp.srgtndr.akaiosorani.android.cartain.controller.AirplaneModeController;
 import jp.srgtndr.akaiosorani.android.cartain.controller.AudioController;
 import jp.srgtndr.akaiosorani.android.cartain.controller.BluetoothController;
 import jp.srgtndr.akaiosorani.android.cartain.controller.DataTrafficController;
+import jp.srgtndr.akaiosorani.android.cartain.controller.GpsController;
 import jp.srgtndr.akaiosorani.android.cartain.controller.ScreenRotationController;
 import jp.srgtndr.akaiosorani.android.cartain.controller.WifiController;
 import com.angrydoughnuts.android.brightprof.BrightnessUtil;
@@ -33,6 +34,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.location.GpsStatus;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
@@ -125,15 +127,7 @@ public class CartainActivity extends Activity {
                 if (state == NetworkInfo.State.UNKNOWN) {
                     return;
                 }
-                int result;
-                if (state == NetworkInfo.State.CONNECTED) {
-                    result = DataTrafficController.setMobileDisabled(CartainActivity.this);
-                }else{
-                    result = DataTrafficController.setMobileEnabled(CartainActivity.this);
-                }
-                if (result != -1) {
-                    Log.d("cartain", "mobile state change success!");
-                }
+                DataTrafficController.setMobileEnabled(CartainActivity.this);
             }
         });
         if (!DataTrafficController.isDevice(this)) 
@@ -176,10 +170,13 @@ public class CartainActivity extends Activity {
         gpsButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO check gps available device
-                startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                GpsController.callSetting(CartainActivity.this);
             }
         });
+        if (!GpsController.isGpsDevice(this))
+        {
+            setButtonEnabled(gpsButton, false);
+        }
 
         // enable/disable speaker
         ImageButton mannerButton = (ImageButton)findViewById(R.id.manner_button);
@@ -445,6 +442,7 @@ public class CartainActivity extends Activity {
         ImageButton wifiButton = (ImageButton)findViewById(R.id.wifi_button);
         wifiButton.setImageResource(WifiController.isEnabled(this) ? R.drawable.wifi2 : R.drawable.wifi);
         ImageButton gpsButton = (ImageButton)findViewById(R.id.gps_button);
+        gpsButton.setImageResource(GpsController.isGpsEnabled(this) ? R.drawable.gps2 : R.drawable.gps);
         ImageButton flightModeButton = (ImageButton)findViewById(R.id.flight_button);
         flightModeButton.setImageResource(AirplaneModeController.isAirplaneModeOn(this) ? R.drawable.airplane2 : R.drawable.airplane);
         ImageButton screenButton = (ImageButton)findViewById(R.id.autorotate_button);

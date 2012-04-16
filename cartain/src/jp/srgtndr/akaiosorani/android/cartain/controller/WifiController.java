@@ -48,6 +48,6 @@ public class WifiController {
 
     public static IntentFilter getFilter()
     {
-        return new IntentFilter(WifiManager.SUPPLICANT_STATE_CHANGED_ACTION);
+        return new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION);
     }
 }

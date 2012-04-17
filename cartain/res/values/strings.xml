@@ -60,5 +60,8 @@
     <string name="pref_summary_open_behavier">Bright the screen when opening</string>    
     <string name="pref_key_revert_brightness">revert_brightness</string>    
     <string name="pref_title_revert_brightness">Revert brightness</string>    
-    <string name="pref_summary_revert_brightness">Revert screen brightness when closing</string>    
+    <string name="pref_summary_revert_brightness">Revert screen brightness when closing</string>
+    
+    <!-- messages -->
+    <string name="alert_enable_data">Enable 3G data traffic</string>
 </resources>

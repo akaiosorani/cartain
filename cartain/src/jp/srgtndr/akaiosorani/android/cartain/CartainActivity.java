@@ -125,15 +125,15 @@ public class CartainActivity extends Activity {
                 boolean current = DataTrafficController.isAvailable(CartainActivity.this);
                 if (!current) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(CartainActivity.this);
-                    builder.setMessage("enable 3g data?")
+                    builder.setMessage(CartainActivity.this.getText(R.string.alert_enable_data))
                            .setCancelable(true)
-                           .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                           .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                @Override
                                public void onClick(DialogInterface dialog, int which) {
                                    DataTrafficController.setMobileEnabled(CartainActivity.this, true);
                                    }
                                })
-                           .setNegativeButton("No", null);
+                           .setNegativeButton(android.R.string.cancel, null);
                     AlertDialog dialog = builder.create();
                     dialog.show();
                 }

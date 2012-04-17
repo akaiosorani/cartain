@@ -27,25 +27,20 @@ import jp.srgtndr.akaiosorani.android.cartain.controller.WifiController;
 import com.angrydoughnuts.android.brightprof.BrightnessUtil;
 
 import android.app.Activity;
-import android.bluetooth.BluetoothAdapter;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.location.GpsStatus;
-import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
-import android.provider.Settings;
-import android.provider.Settings.SettingNotFoundException;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -127,7 +122,25 @@ public class CartainActivity extends Activity {
                 if (state == NetworkInfo.State.UNKNOWN) {
                     return;
                 }
-                DataTrafficController.setMobileEnabled(CartainActivity.this);
+                boolean current = DataTrafficController.isAvailable(CartainActivity.this);
+                if (!current) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(CartainActivity.this);
+                    builder.setMessage("enable 3g data?")
+                           .setCancelable(true)
+                           .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                               @Override
+                               public void onClick(DialogInterface dialog, int which) {
+                                   DataTrafficController.setMobileEnabled(CartainActivity.this, true);
+                                   }
+                               })
+                           .setNegativeButton("No", null);
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+                else
+                {
+                    DataTrafficController.setMobileEnabled(CartainActivity.this, !current);
+                }
             }
         });
         if (!DataTrafficController.isDevice(this)) 

@@ -28,6 +28,9 @@ public class DataTrafficController {
 
     private static int TARGET_DEVICE_TYPE = ConnectivityManager.TYPE_MOBILE;
 
+    private static String ENABLE_METHOD_NAME = "enableDataConnectivity";
+    private static String DISABLE_METHOD_NAME = "disableDataConnectivity";
+
     private static ConnectivityManager getManager(Context context)
     {
         ConnectivityManager manager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -64,21 +67,30 @@ public class DataTrafficController {
         return (info != null) ? info.getState() : NetworkInfo.State.UNKNOWN;
     }
 
-    public static void setMobileEnabled(Context context)
+    private static TelephonyManager getTelephoneyManager(Context context)
     {
-        TelephonyManager telephonyManager = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
-        boolean current = (telephonyManager.getDataState() == TelephonyManager.DATA_CONNECTED);
+        return (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
+    }
+    
+    public static void setMobileEnabled(Context context, boolean enabled)
+    {
+        TelephonyManager manager = getTelephoneyManager(context);
+        boolean current = (manager.getDataState() == TelephonyManager.DATA_CONNECTED);
+        if (current == enabled)
+        {
+            return;
+        }
 
         try {
-            Class telephonyManagerClass = Class.forName(telephonyManager.getClass().getName());
-            Method getITelephonyMethod = telephonyManagerClass.getDeclaredMethod("getITelephony");
+            Class managerClass = Class.forName(manager.getClass().getName());
+            Method getITelephonyMethod = managerClass.getDeclaredMethod("getITelephony");
             getITelephonyMethod.setAccessible(true);
-            Object ITelephonyStub = getITelephonyMethod.invoke(telephonyManager);
-            Class ITelephonyClass = Class.forName(ITelephonyStub.getClass().getName());
-            String methodName = current ? "disableDataConnectivity" : "enableDataConnectivity";
-            Method dataConnSwitchmethod = ITelephonyClass.getDeclaredMethod(methodName);
-            dataConnSwitchmethod.setAccessible(true);
-            dataConnSwitchmethod.invoke(ITelephonyStub);
+            Object iTelephony = getITelephonyMethod.invoke(manager);
+            Class iTelephonyClass = Class.forName(iTelephony.getClass().getName());
+            String methodName = enabled ? ENABLE_METHOD_NAME : DISABLE_METHOD_NAME;
+            Method connectMethod = iTelephonyClass.getDeclaredMethod(methodName);
+            connectMethod.setAccessible(true);
+            connectMethod.invoke(iTelephony);
         } catch (ClassNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

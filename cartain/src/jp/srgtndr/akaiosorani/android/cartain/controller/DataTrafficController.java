@@ -82,10 +82,12 @@ public class DataTrafficController {
         }
 
         try {
+            @SuppressWarnings("rawtypes")
             Class managerClass = Class.forName(manager.getClass().getName());
             Method getITelephonyMethod = managerClass.getDeclaredMethod("getITelephony");
             getITelephonyMethod.setAccessible(true);
             Object iTelephony = getITelephonyMethod.invoke(manager);
+            @SuppressWarnings("rawtypes")
             Class iTelephonyClass = Class.forName(iTelephony.getClass().getName());
             String methodName = enabled ? ENABLE_METHOD_NAME : DISABLE_METHOD_NAME;
             Method connectMethod = iTelephonyClass.getDeclaredMethod(methodName);

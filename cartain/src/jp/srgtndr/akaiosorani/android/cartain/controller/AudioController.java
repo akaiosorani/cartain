@@ -16,26 +16,45 @@
 package jp.srgtndr.akaiosorani.android.cartain.controller;
 
 import android.content.Context;
+import android.content.IntentFilter;
 import android.media.AudioManager;
 
 public class AudioController {
+
+    private static boolean useSilent = false;
 
     private static AudioManager getManager(Context context)
     {
         AudioManager audioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
         return audioManager;
     }
-
-    public static boolean isRinger(Context context)
+    private static int getMode(boolean enabled)
     {
-        AudioManager audioManager = getManager(context);
-        return !(audioManager.getRingerMode() == AudioManager.RINGER_MODE_SILENT);
+        if (enabled)
+        {
+            return AudioManager.RINGER_MODE_NORMAL;
+        }else {
+            return useSilent ? AudioManager.RINGER_MODE_SILENT : AudioManager.RINGER_MODE_VIBRATE;
+        }
     }
 
-    public static void setEnabled(Context context, boolean enable)
+    public static int getMode(Context context)
     {
         AudioManager audioManager = getManager(context);
-        int mode = enable ? AudioManager.RINGER_MODE_NORMAL : AudioManager.RINGER_MODE_SILENT;
-        audioManager.setRingerMode(mode);
+        return audioManager.getRingerMode();
+    }
+    public static boolean isRinger(Context context)
+    {
+        return getMode(context) == AudioManager.RINGER_MODE_NORMAL;
+    }
+
+    public static void setRingerEnabled(Context context, boolean enabled)
+    {
+        AudioManager audioManager = getManager(context);
+        audioManager.setRingerMode(getMode(enabled));
+    }
+    public static IntentFilter getFilter()
+    {
+        return new IntentFilter(AudioManager.RINGER_MODE_CHANGED_ACTION);
     }
 }

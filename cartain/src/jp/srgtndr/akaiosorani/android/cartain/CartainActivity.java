@@ -34,6 +34,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.media.AudioManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
@@ -196,7 +197,7 @@ public class CartainActivity extends Activity {
         mannerButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                AudioController.setEnabled(CartainActivity.this, !AudioController.isRinger(CartainActivity.this));
+                AudioController.setRingerEnabled(CartainActivity.this, !AudioController.isRinger(CartainActivity.this));
             }
         });
 
@@ -274,6 +275,7 @@ public class CartainActivity extends Activity {
         registerReceiver(receiver, BluetoothController.getFilter());
         registerReceiver(receiver, WifiController.getFilter());
         registerReceiver(receiver, AirplaneModeController.getFilter());
+        registerReceiver(receiver, AudioController.getFilter());
 //        registerReceiver(receiver, ScreenRotationController.getFilter());
         updateButtonStatus();
 
@@ -460,6 +462,9 @@ public class CartainActivity extends Activity {
         flightModeButton.setImageResource(AirplaneModeController.isAirplaneModeOn(this) ? R.drawable.airplane2 : R.drawable.airplane);
         ImageButton screenButton = (ImageButton)findViewById(R.id.autorotate_button);
         ImageButton mannerButton = (ImageButton)findViewById(R.id.manner_button);
+        int mode = AudioController.getMode(this);
+        int res = mode == AudioManager.RINGER_MODE_NORMAL ? R.drawable.manner2 : (mode==AudioManager.RINGER_MODE_SILENT ? R.drawable.manner : R.drawable.manner3);
+        mannerButton.setImageResource(res);
     }
 
     private void setBrightness(int percent, boolean updateSeekbar) {

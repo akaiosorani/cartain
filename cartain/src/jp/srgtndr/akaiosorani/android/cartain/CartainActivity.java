@@ -190,6 +190,8 @@ public class CartainActivity extends Activity {
         if (!GpsController.isGpsDevice(this))
         {
             setButtonEnabled(gpsButton, false);
+        } else {
+            GpsController.startStatusCheck(getApplicationContext());
         }
 
         // enable/disable speaker
@@ -274,6 +276,7 @@ public class CartainActivity extends Activity {
         registerReceiver(receiver, DataTrafficController.getFilter());
         registerReceiver(receiver, BluetoothController.getFilter());
         registerReceiver(receiver, WifiController.getFilter());
+        registerReceiver(receiver, GpsController.getFilter());
         registerReceiver(receiver, AirplaneModeController.getFilter());
         registerReceiver(receiver, AudioController.getFilter());
 //        registerReceiver(receiver, ScreenRotationController.getFilter());
@@ -313,6 +316,7 @@ public class CartainActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        GpsController.stopStatusCheck();
         unbindService();
         unregisterReceiver(receiver);
     }

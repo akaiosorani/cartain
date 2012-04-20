@@ -12,12 +12,13 @@ import android.provider.Settings;
 import android.util.Log;
 
 public class GpsController {
-
+    // for judgement API level
     private static final int GINGERBREAD = 9;
 
     // LocationManager.PROVIDERS_CHANGED_ACTION defined from API 9 (2.3)
     private static final String PROVIDERS_CHANGED = "android.location.PROVIDERS_CHANGED";
 
+    // check interval (ms)
     private static final int STATUS_CHECK_INTERVAL = 2000;
 
     private static Timer timer;
@@ -56,6 +57,10 @@ public class GpsController {
             return;
         }
         synchronized (PROVIDERS_CHANGED) {
+            if (timer != null) 
+            {
+                return;
+            }
             enabledGps = isGpsEnabled(context);
             // start timer for Gps Enabled/Disabled
             timer = new Timer(true);
@@ -84,6 +89,7 @@ public class GpsController {
             {
                 return;
             }
+            Log.d("cartain", "timer canceled");
             timer.cancel();
             timer = null;
         }

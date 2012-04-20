@@ -306,9 +306,13 @@ public class CartainActivity extends Activity {
         if(hasFocus || showPreference)
         {
             hideCartain();
+            GpsController.startStatusCheck(getApplicationContext());
+            updateGpsButtonStatus();
         }else
         {
             showCartain();
+            GpsController.stopStatusCheck();
+            updateGpsButtonStatus();
         }
         super.onWindowFocusChanged(hasFocus);
     }
@@ -460,8 +464,7 @@ public class CartainActivity extends Activity {
         btButton.setImageResource(BluetoothController.isEnabled(this) ? R.drawable.bt2 : R.drawable.bt);
         ImageButton wifiButton = (ImageButton)findViewById(R.id.wifi_button);
         wifiButton.setImageResource(WifiController.isEnabled(this) ? R.drawable.wifi2 : R.drawable.wifi);
-        ImageButton gpsButton = (ImageButton)findViewById(R.id.gps_button);
-        gpsButton.setImageResource(GpsController.isGpsEnabled(this) ? R.drawable.gps2 : R.drawable.gps);
+        updateGpsButtonStatus();
         ImageButton flightModeButton = (ImageButton)findViewById(R.id.flight_button);
         flightModeButton.setImageResource(AirplaneModeController.isAirplaneModeOn(this) ? R.drawable.airplane2 : R.drawable.airplane);
         ImageButton screenButton = (ImageButton)findViewById(R.id.autorotate_button);
@@ -469,6 +472,11 @@ public class CartainActivity extends Activity {
         int mode = AudioController.getMode(this);
         int res = mode == AudioManager.RINGER_MODE_NORMAL ? R.drawable.manner2 : (mode==AudioManager.RINGER_MODE_SILENT ? R.drawable.manner : R.drawable.manner3);
         mannerButton.setImageResource(res);
+    }
+    private void updateGpsButtonStatus()
+    {
+        ImageButton gpsButton = (ImageButton)findViewById(R.id.gps_button);
+        gpsButton.setImageResource(GpsController.isGpsEnabled(this) ? R.drawable.gps2 : R.drawable.gps);
     }
 
     private void setBrightness(int percent, boolean updateSeekbar) {

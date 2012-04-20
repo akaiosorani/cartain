@@ -45,6 +45,5 @@ public class ScreenRotationController {
     public static IntentFilter getFilter()
     {
         return null;
-//        return new IntentFilter("android.intent.action.SERVICE_STATE");
     }
 }

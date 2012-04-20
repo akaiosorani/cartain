@@ -210,6 +210,7 @@ public class CartainActivity extends Activity {
             public void onClick(View v) {
                 boolean current = ScreenRotationController.isAutoRotationEnabled(CartainActivity.this);
                 ScreenRotationController.setAutoRotationEnabled(CartainActivity.this, !current);
+                updateScreenRotationStatus();
             }
         });
 
@@ -307,13 +308,13 @@ public class CartainActivity extends Activity {
         {
             hideCartain();
             GpsController.startStatusCheck(getApplicationContext());
-            updateGpsButtonStatus();
         }else
         {
             showCartain();
             GpsController.stopStatusCheck();
-            updateGpsButtonStatus();
         }
+        updateGpsButtonStatus();
+        updateScreenRotationStatus();
         super.onWindowFocusChanged(hasFocus);
     }
 
@@ -467,16 +468,21 @@ public class CartainActivity extends Activity {
         updateGpsButtonStatus();
         ImageButton flightModeButton = (ImageButton)findViewById(R.id.flight_button);
         flightModeButton.setImageResource(AirplaneModeController.isAirplaneModeOn(this) ? R.drawable.airplane2 : R.drawable.airplane);
-        ImageButton screenButton = (ImageButton)findViewById(R.id.autorotate_button);
         ImageButton mannerButton = (ImageButton)findViewById(R.id.manner_button);
         int mode = AudioController.getMode(this);
         int res = mode == AudioManager.RINGER_MODE_NORMAL ? R.drawable.manner2 : (mode==AudioManager.RINGER_MODE_SILENT ? R.drawable.manner : R.drawable.manner3);
         mannerButton.setImageResource(res);
+        updateScreenRotationStatus();
     }
     private void updateGpsButtonStatus()
     {
         ImageButton gpsButton = (ImageButton)findViewById(R.id.gps_button);
         gpsButton.setImageResource(GpsController.isGpsEnabled(this) ? R.drawable.gps2 : R.drawable.gps);
+    }
+    private void updateScreenRotationStatus()
+    {
+        ImageButton screenButton = (ImageButton)findViewById(R.id.autorotate_button);
+        screenButton.setImageResource(ScreenRotationController.isAutoRotationEnabled(this) ? R.drawable.screen2 : R.drawable.screen);
     }
 
     private void setBrightness(int percent, boolean updateSeekbar) {

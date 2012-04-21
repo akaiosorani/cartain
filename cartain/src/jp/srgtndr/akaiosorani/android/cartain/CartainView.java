@@ -15,6 +15,10 @@
  */
 package jp.srgtndr.akaiosorani.android.cartain;
 
+import java.util.Date;
+
+import jp.srgtndr.akaiosorani.android.cartain.controller.AppInfo;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -30,6 +34,8 @@ public class CartainView extends FrameLayout {
 
     private static CartainView view = null;
 
+    private TextView label;
+
     CartainView(Context context) {
         super(context);
         setLayout(context);
@@ -42,15 +48,20 @@ public class CartainView extends FrameLayout {
         LayoutParams params = this.generateDefaultLayoutParams();
         params.gravity = Gravity.LEFT;
 
-        TextView label = new TextView(context);
+        label = new TextView(context);
+        label.setTextColor(Color.BLACK);
         label.setText(" ");
-        label.setTextSize(40);
+        label.setTextSize(8);
         addView(label, params);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        Date current = new Date(System.currentTimeMillis());
+        label.setText(AppInfo.getMemoryInfo(getContext()));
+//        label.setText(current.toLocaleString());
+        
     }
 
     public static CartainView createView(Context context) {
@@ -58,7 +69,7 @@ public class CartainView extends FrameLayout {
         WindowManager wm = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
 
         WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                50, 50, 
+                100, 50, 
                 WindowManager.LayoutParams.TYPE_SYSTEM_ALERT, 
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | 
                 WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL |

@@ -64,6 +64,7 @@ import android.widget.TextView;
  *
  */
 public class CartainActivity extends Activity {
+    private final static int VIEW_DURATION = 800;
 
     private final Messenger messnger = new Messenger(new IncomingHandler());
 
@@ -245,11 +246,7 @@ public class CartainActivity extends Activity {
         closeButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                CheckBox revertClosing = (CheckBox)findViewById(R.id.revert_brightness);
-                Log.d("cartain", String.format("original brightness: %d current: %d", originalBrightness, BrightnessUtil.getSystemBrightness(getContentResolver())));
-                if (revertClosing.isChecked()) {
-                    BrightnessUtil.setSystemBrightness(getContentResolver(), getWindow(), originalBrightness);
-                }
+                revertBrightness();
                 startCartain();
                 Log.d("cartain", String.format("current: %d", BrightnessUtil.getSystemBrightness(getContentResolver())));
                 finish();
@@ -261,8 +258,9 @@ public class CartainActivity extends Activity {
         exitButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                revertBrightness();
                 stopCartain();
-                // TODO stop service
+                stopService();
                 finish();
             }
         });
@@ -289,17 +287,7 @@ public class CartainActivity extends Activity {
         params.alpha = 0.85f;
         w.setAttributes(params);
 
-        // set animation for opening
-        TranslateAnimation animation = 
-                new TranslateAnimation(
-                    Animation.RELATIVE_TO_PARENT, -1.0f,
-                    Animation.RELATIVE_TO_PARENT, 0.0f, 
-                    Animation.RELATIVE_TO_PARENT, 0.0f,
-                    Animation.RELATIVE_TO_PARENT, 0.0f);
-        animation.setDuration(200);
-        animation.setFillAfter(true);
-        View rootView = findViewById(R.id.main);
-        rootView.startAnimation(animation);
+        setStartAnimation();
     }
 
     @Override
@@ -362,6 +350,29 @@ public class CartainActivity extends Activity {
     public void onOptionsMenuClosed(Menu menu) {
         showPreference = false;
         super.onOptionsMenuClosed(menu);
+    }
+
+    private void setStartAnimation()
+    {
+        // set animation for opening
+        TranslateAnimation animation = 
+                new TranslateAnimation(
+                    Animation.RELATIVE_TO_PARENT, -1.0f,
+                    Animation.RELATIVE_TO_PARENT, 0.0f, 
+                    Animation.RELATIVE_TO_PARENT, 0.0f,
+                    Animation.RELATIVE_TO_PARENT, 0.0f);
+        animation.setDuration(VIEW_DURATION);
+        animation.setFillAfter(true);
+        View rootView = findViewById(R.id.main);
+        rootView.startAnimation(animation);
+    }
+    private void revertBrightness()
+    {
+        CheckBox revertClosing = (CheckBox)findViewById(R.id.revert_brightness);
+        Log.d("cartain", String.format("original brightness: %d current: %d", originalBrightness, BrightnessUtil.getSystemBrightness(getContentResolver())));
+        if (revertClosing.isChecked()) {
+            BrightnessUtil.setSystemBrightness(getContentResolver(), getWindow(), originalBrightness);
+        }
     }
 
     /**
@@ -455,6 +466,10 @@ public class CartainActivity extends Activity {
     private void unbindService()
     {
         unbindService(con);
+    }
+    private void stopService()
+    {
+        stopService(new Intent(this, CartainService.class));
     }
 
     private void updateButtonStatus()

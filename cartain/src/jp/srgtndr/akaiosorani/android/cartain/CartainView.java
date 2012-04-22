@@ -32,6 +32,8 @@ import android.widget.TextView;
 
 public class CartainView extends FrameLayout {
 
+    private static final String SYNC_KEY = "CartainView";
+
     private static CartainView view = null;
 
     private TextView label;
@@ -59,9 +61,8 @@ public class CartainView extends FrameLayout {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         Date current = new Date(System.currentTimeMillis());
+//      label.setText(current.toLocaleString());
         label.setText(AppInfo.getMemoryInfo(getContext()));
-//        label.setText(current.toLocaleString());
-        
     }
 
     public static CartainView createView(Context context) {
@@ -88,10 +89,13 @@ public class CartainView extends FrameLayout {
     public static void destroyView(Context context)
     {
         if (view==null) return;
-        WindowManager wm = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
-        // TODO fix error
-        wm.removeView(view);
-        Log.d("cartain", "remove from WM");
+        synchronized (SYNC_KEY) {
+            if (view==null) return;
+            WindowManager wm = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
+            wm.removeView(view);
+            view = null;
+            Log.d("cartain", "remove from WM");
+        }
     }
 
     public static void show()

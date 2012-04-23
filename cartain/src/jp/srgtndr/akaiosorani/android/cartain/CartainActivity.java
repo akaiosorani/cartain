@@ -289,6 +289,13 @@ public class CartainActivity extends Activity {
 
         setStartAnimation();
     }
+    @Override
+    public void onBackPressed() 
+    {
+        super.onBackPressed();
+        Log.d("cartain", "onBackPressed");
+        revertBrightness();
+    }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
@@ -309,6 +316,7 @@ public class CartainActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Log.d("cartain", "onDestroy");
         GpsController.stopStatusCheck();
         unbindService();
         unregisterReceiver(receiver);

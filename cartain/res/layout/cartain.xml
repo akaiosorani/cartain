@@ -16,123 +16,129 @@
  * the License.
  */
  -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:id="@+id/main"
-  android:orientation="vertical"
-  android:layout_width="fill_parent"
-  android:layout_height="fill_parent"
-  android:minWidth="320dp">
-  <!--  set GPS/BT/3G/Wlan/manner  -->
-  <TableLayout android:id="@+id/switch1"
-      android:layout_gravity="center"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content">
-    <TableRow android:id="@+id/switch_r1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-      <ImageButton
-          android:id="@+id/bt_button"
-          android:src="@drawable/bt"
-          android:contentDescription="@string/bt_button_description"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content">
-      </ImageButton>
-      <ImageButton
-          android:id="@+id/data_button"
-          android:src="@drawable/data"
-          android:contentDescription="@string/data_button_description"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content">
-      </ImageButton>
-      <ImageButton
-          android:id="@+id/wifi_button"
-          android:src="@drawable/wifi"
-          android:contentDescription="@string/wifi_button_description"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content">
-      </ImageButton>
-      <ImageButton
-          android:id="@+id/gps_button"
-          android:src="@drawable/gps"
-          android:contentDescription="@string/gps_button_description"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content">
-      </ImageButton>
-    </TableRow>
-    <TableRow android:id="@+id/switch_r2"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-      <ImageButton
-          android:id="@+id/manner_button"
-          android:src="@drawable/manner"
-          android:contentDescription="@string/manner_button_description"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content">
-      </ImageButton>
-      <ImageButton
-          android:id="@+id/autorotate_button"
-          android:src="@drawable/screen"
-          android:contentDescription="@string/autorotate_button_description"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content">
-      </ImageButton>
-      <ImageButton
-          android:id="@+id/flight_button"
-          android:src="@drawable/airplane"
-          android:contentDescription="@string/flight_button_description"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content">
-      </ImageButton>
-    </TableRow>
-  </TableLayout>
-  <TextView android:id="@+id/brightness"
-      android:text="@string/brightness"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content" />
-  <LinearLayout
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:scrollbars="none"
+    android:minWidth="320dp">
+  <LinearLayout 
+      android:orientation="vertical"
       android:layout_width="fill_parent"
-      android:layout_height="wrap_content"
-      android:padding="5dp"
-      android:orientation="horizontal">
-	<SeekBar android:id="@+id/brightness_slider"
+      android:layout_height="wrap_content">
+  <!--  set GPS/BT/3G/Wlan/manner  -->
+    <TableLayout android:id="@+id/switch1"
+        android:layout_gravity="center"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+      <TableRow android:id="@+id/switch_r1"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content">
+        <ImageButton
+            android:id="@+id/bt_button"
+            android:src="@drawable/bt"
+            android:contentDescription="@string/bt_button_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </ImageButton>
+        <ImageButton
+            android:id="@+id/data_button"
+            android:src="@drawable/data"
+            android:contentDescription="@string/data_button_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </ImageButton>
+        <ImageButton
+            android:id="@+id/wifi_button"
+            android:src="@drawable/wifi"
+            android:contentDescription="@string/wifi_button_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </ImageButton>
+        <ImageButton
+            android:id="@+id/gps_button"
+            android:src="@drawable/gps"
+            android:contentDescription="@string/gps_button_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </ImageButton>
+      </TableRow>
+      <TableRow android:id="@+id/switch_r2"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content">
+        <ImageButton
+            android:id="@+id/manner_button"
+            android:src="@drawable/manner"
+            android:contentDescription="@string/manner_button_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </ImageButton>
+        <ImageButton
+            android:id="@+id/autorotate_button"
+            android:src="@drawable/screen"
+            android:contentDescription="@string/autorotate_button_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </ImageButton>
+        <ImageButton
+            android:id="@+id/flight_button"
+            android:src="@drawable/airplane"
+            android:contentDescription="@string/flight_button_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </ImageButton>
+      </TableRow>
+    </TableLayout>
+    <TextView android:id="@+id/brightness"
+        android:text="@string/brightness"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
-        android:layout_weight="1"
-        android:max="99"
-        android:progress="50" />
-    <!-- TODO fix layout balance  -->
-    <EditText
-        android:id="@+id/brightness_value"
-        android:layout_width="72dp"
-        android:layout_height="48dp"
-        android:layout_gravity="center_vertical"
-        android:state_enabled="false"
-        android:focusable="false"
-        android:gravity="right|center"
-        android:hint="@string/brightness_hint"
-        android:maxWidth="100dp"
-        android:minWidth="50dp" />
-  </LinearLayout>
-  <CheckBox android:id="@+id/revert_brightness"
-      android:text="@string/revert_brightness"
-      android:checked="true"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content" />
-  <LinearLayout
-      android:layout_width="fill_parent"
-      android:layout_height="wrap_content">
-    <Button android:id="@+id/close_button"
-        android:text="@string/close_button"
-        android:textSize="18sp"
-        android:layout_weight="1"
+        android:orientation="horizontal">
+      <SeekBar android:id="@+id/brightness_slider"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:padding="5dp"
+          android:layout_weight="1"
+          android:max="99"
+          android:progress="50" />
+      <!-- TODO fix layout balance  -->
+      <EditText
+          android:id="@+id/brightness_value"
+          android:layout_width="72dp"
+          android:layout_height="48dp"
+          android:layout_gravity="center_vertical"
+          android:state_enabled="false"
+          android:focusable="false"
+          android:gravity="right|center"
+          android:hint="@string/brightness_hint"
+          android:maxWidth="100dp"
+          android:minWidth="50dp" />
+    </LinearLayout>
+    <CheckBox android:id="@+id/revert_brightness"
+        android:text="@string/revert_brightness"
+        android:checked="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-    <Button android:id="@+id/exit_button"
-        android:text="@string/exit_button"
-        android:textSize="18sp"
-        android:layout_weight="1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp">
+      <Button android:id="@+id/close_button"
+          android:text="@string/close_button"
+          android:textSize="18sp"
+          android:layout_weight="1"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content" />
+      <Button android:id="@+id/exit_button"
+          android:text="@string/exit_button"
+          android:textSize="18sp"
+          android:layout_weight="1"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content" />
+    </LinearLayout>
   </LinearLayout>
-</LinearLayout>
+</ScrollView>

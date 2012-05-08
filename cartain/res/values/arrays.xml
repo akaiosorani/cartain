@@ -18,20 +18,11 @@
  -->
 <resources>
     <string-array name="pref_entries_position">
-	    <item>Left upper</item>
-	    <item>Left center</item>
-	    <item>Left lower</item>
-	    <item>Right upper</item>
-	    <item>Right center</item>
-	    <item>Right lower</item>
+        <item>Left</item>
+        <item>Right</item>
     </string-array>
     <string-array name="pref_values_position">
-        <item>Left upper</item>
-        <item>Left center</item>
-        <item>Left lower</item>
-        <item>Right upper</item>
-        <item>Right center</item>
-        <item>Right lower</item>
+        <item>Left</item>
+        <item>Right</item>
     </string-array>
-    
 </resources>

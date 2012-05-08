@@ -32,19 +32,23 @@
                 android:dialogTitle="@string/pref_title_position_list" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_brightness">
-	    <!-- brighten display when opening -->
-	    <CheckBoxPreference
-            android:key="@string/pref_key_open_behavier"
-            android:title="@string/pref_title_open_behavier"
-            android:summary="@string/pref_summary_open_behavier"  />
+        <!-- brighten display when opening -->
+        <CheckBoxPreference
+            android:key="@string/pref_key_bright_with_dialog"
+            android:title="@string/pref_title_bright_with_dialog"
+            android:summary="@string/pref_summary_bright_with_dialog"  />
         <!-- brightness settings for opening  -->
     
-	    <!-- return brightness when closing  -->
-	    <CheckBoxPreference
+        <!-- return brightness when closing  -->
+        <CheckBoxPreference
             android:key="@string/pref_key_revert_brightness"
             android:title="@string/pref_title_revert_brightness"
             android:summary="@string/pref_summary_revert_brightness"  />
     </PreferenceCategory>
-    <PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_others">
+        <CheckBoxPreference
+            android:key="@string/pref_key_show_battery"
+            android:title="@string/pref_title_show_battery"
+            android:summary="@string/pref_summary_show_battery"  />
     </PreferenceCategory>
 </PreferenceScreen>

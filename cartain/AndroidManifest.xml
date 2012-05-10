@@ -48,7 +48,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Preferences"
+            android:name=".CartainSettings"
             android:launchMode="singleTop">
         </activity>
         <service 

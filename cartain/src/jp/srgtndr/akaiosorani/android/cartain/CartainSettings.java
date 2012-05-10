@@ -21,8 +21,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.widget.CheckBox;
 
-public class Preferences extends PreferenceActivity {
+public class CartainSettings extends PreferenceActivity {
 
     private static SharedPreferences getSharedPreferences(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context);
@@ -32,5 +33,6 @@ public class Preferences extends PreferenceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.layout.preferences);
+        SharedPreferences pref = getSharedPreferences(this);
     }
 }

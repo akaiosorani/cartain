@@ -347,7 +347,7 @@ public class CartainActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getTitle().equals(getString(R.string.menu_preferences))) {
-            Intent intent = new Intent(this, Preferences.class);
+            Intent intent = new Intent(this, CartainSettings.class);
             startActivity(intent);
             return true;
         }

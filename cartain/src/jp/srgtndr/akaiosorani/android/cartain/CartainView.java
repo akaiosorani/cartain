@@ -21,11 +21,11 @@ import jp.srgtndr.akaiosorani.android.cartain.controller.AppInfo;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
+import android.graphics.Color;    
 import android.graphics.PixelFormat;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.View;
+import android.view.View;    
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -37,6 +37,8 @@ public class CartainView extends FrameLayout {
     private static CartainView view = null;
 
     private TextView label;
+    
+    private static int drawingCount = 0;
 
     CartainView(Context context) {
         super(context);
@@ -59,18 +61,20 @@ public class CartainView extends FrameLayout {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
+        Log.d("cartain", "ondraw" + new Integer(drawingCount++).toString());
+/*
+    	super.onDraw(canvas);
         Date current = new Date(System.currentTimeMillis());
 //      label.setText(current.toLocaleString());
         label.setText(AppInfo.getMemoryInfo(getContext()));
+*/
     }
-
     public static CartainView createView(Context context) {
         CartainView v = new CartainView(context);
         WindowManager wm = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
 
         WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                100, 50, 
+                50, 50, 
                 WindowManager.LayoutParams.TYPE_SYSTEM_ALERT, 
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | 
                 WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL |

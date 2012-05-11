@@ -15,16 +15,21 @@
  */
 package jp.srgtndr.akaiosorani.android.cartain;
 
-import jp.srgtndr.akaiosorani.android.cartain.R;
-import android.os.Bundle;import android.preference.PreferenceManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 
-import android.preference.PreferenceActivity;
-
-public class CartainSettings extends PreferenceActivity {
+public class BootupReceiver extends BroadcastReceiver {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.layout.preferences);
+    public void onReceive(Context context, Intent intent) {
+        Log.d("cartain", "Boot completed");
+        if (Preferences.getStartupOnBoot(context))
+        {
+            Intent service = new Intent(context, CartainService.class);
+            context.startService(service);
+            Log.d("cartain", "start cartain service with bootup");
+        }
     }
 }

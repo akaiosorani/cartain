@@ -15,16 +15,22 @@
  */
 package jp.srgtndr.akaiosorani.android.cartain;
 
-import jp.srgtndr.akaiosorani.android.cartain.R;
-import android.os.Bundle;import android.preference.PreferenceManager;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
-import android.preference.PreferenceActivity;
-
-public class CartainSettings extends PreferenceActivity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.layout.preferences);
+public class Preferences {
+    
+    private static final boolean DEFAULT_STARTUP_ON_BOOT = false;
+    
+    private static SharedPreferences getSharedPreferences(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context);
     }
+
+    public static boolean getStartupOnBoot(Context context)
+    {
+        SharedPreferences prefs = getSharedPreferences(context);
+        return prefs.getBoolean(context.getString(R.string.pref_key_startup), DEFAULT_STARTUP_ON_BOOT);
+    }
+
 }

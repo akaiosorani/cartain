@@ -16,7 +16,7 @@
 package jp.srgtndr.akaiosorani.android.cartain;
 
 import jp.srgtndr.akaiosorani.android.cartain.R;
-import android.os.Bundle;import android.preference.PreferenceManager;
+import android.os.Bundle;
 
 import android.preference.PreferenceActivity;
 
@@ -26,5 +26,8 @@ public class CartainSettings extends PreferenceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.layout.preferences);
+        
+        // TODO set default value if value is empty
+        // TODO check settings value 
     }
 }

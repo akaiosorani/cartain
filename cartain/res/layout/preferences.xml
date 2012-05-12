@@ -24,7 +24,7 @@
             android:title="@string/pref_title_startup"
             android:summary="@string/pref_summary_startup"  />
         <ListPreference
-                android:key="pref_position"
+                android:key="@string/pref_key_position"
                 android:title="@string/pref_title_position_list"
                 android:summary="@string/pref_summary_position_list"
                 android:entries="@array/pref_entries_position"
@@ -38,7 +38,10 @@
             android:title="@string/pref_title_bright_with_dialog"
             android:summary="@string/pref_summary_bright_with_dialog"  />
         <!-- brightness settings for opening  -->
-    
+        <EditTextPreference
+            android:key="@string/pref_key_brightness"
+            android:title="@string/pref_title_brightness"
+            android:summary="@string/pref_summary_brightness" />
         <!-- return brightness when closing  -->
         <CheckBoxPreference
             android:key="@string/pref_key_revert_brightness"
@@ -50,5 +53,13 @@
             android:key="@string/pref_key_show_battery"
             android:title="@string/pref_title_show_battery"
             android:summary="@string/pref_summary_show_battery"  />
-    </PreferenceCategory>
+        <ListPreference
+                android:key="@string/pref_key_silent_mode"
+                android:title="@string/pref_title_silent_mode"
+                android:summary="@string/pref_summary_silent_mode"
+                android:entries="@array/pref_entries_silent"
+                android:entryValues="@array/pref_values_silent"
+                android:defaultValue="@array/pref_values_silent"
+                android:dialogTitle="@string/pref_title_silent_mode" />
+        </PreferenceCategory>
 </PreferenceScreen>

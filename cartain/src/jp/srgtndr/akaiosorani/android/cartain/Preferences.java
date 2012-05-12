@@ -22,15 +22,56 @@ import android.preference.PreferenceManager;
 public class Preferences {
     
     private static final boolean DEFAULT_STARTUP_ON_BOOT = false;
-    
+    private static final boolean DEFAULT_BRIGHT_WITH_DIALOG = true;
+    private static final boolean DEFAULT_REVERT_BRIGHTNESS = true;
+    private static final int DEFAULT_BRIGHTNESS = 60;
     private static SharedPreferences getSharedPreferences(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context);
     }
 
-    public static boolean getStartupOnBoot(Context context)
+    public static boolean isStartupOnBoot(Context context)
     {
         SharedPreferences prefs = getSharedPreferences(context);
         return prefs.getBoolean(context.getString(R.string.pref_key_startup), DEFAULT_STARTUP_ON_BOOT);
+    }
+    public static boolean isBrightWithDialog(Context context)
+    {
+        SharedPreferences prefs = getSharedPreferences(context);
+        return prefs.getBoolean(context.getString(R.string.pref_key_bright_with_dialog), DEFAULT_BRIGHT_WITH_DIALOG);
+    }
+    public static boolean isRevertBrightness(Context context)
+    {
+        SharedPreferences prefs = getSharedPreferences(context);
+        return prefs.getBoolean(context.getString(R.string.pref_key_revert_brightness), DEFAULT_REVERT_BRIGHTNESS);
+    }
+    public static int getBrightness(Context context)
+    {
+        SharedPreferences prefs = getSharedPreferences(context);
+        String brightnessSetting = prefs.getString(context.getString(R.string.pref_key_brightness), new Integer(DEFAULT_BRIGHTNESS).toString());
+        int brightness = DEFAULT_BRIGHTNESS;
+        try
+        {
+            brightness = Integer.valueOf(brightnessSetting);
+            if (brightness > 100) brightness = 100;
+            if (brightness < 5) brightness = 5;
+        }catch(NumberFormatException ex)
+        {
+        }
+        return brightness;
+    }
+    public static boolean isIconOnLeft(Context context)
+    {
+        SharedPreferences prefs = getSharedPreferences(context);
+        String[] values = context.getResources().getStringArray(R.array.pref_values_position);
+        String iconSetting = prefs.getString(context.getString(R.string.pref_key_position), values[0]);
+        return values[0].equals(iconSetting);
+    }
+    public static boolean isMannerMode(Context context)
+    {
+        SharedPreferences prefs = getSharedPreferences(context);
+        String[] values = context.getResources().getStringArray(R.array.pref_values_silent);
+        String silentSetting = prefs.getString(context.getString(R.string.pref_key_silent_mode), values[0]);
+        return values[0].equals(silentSetting);
     }
 
 }

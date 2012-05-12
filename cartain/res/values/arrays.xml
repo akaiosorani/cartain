@@ -25,4 +25,12 @@
         <item>Left</item>
         <item>Right</item>
     </string-array>
+    <string-array name="pref_entries_silent">
+        <item>Manner mode</item>
+        <item>Silent mode</item>
+    </string-array>
+    <string-array name="pref_values_silent">
+        <item>Manner mode</item>
+        <item>Silent mode</item>
+    </string-array>
 </resources>

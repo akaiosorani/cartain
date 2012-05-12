@@ -25,7 +25,7 @@ public class BootupReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d("cartain", "Boot completed");
-        if (Preferences.getStartupOnBoot(context))
+        if (Preferences.isStartupOnBoot(context))
         {
             Intent service = new Intent(context, CartainService.class);
             context.startService(service);

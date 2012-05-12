@@ -23,6 +23,10 @@ public class AudioController {
 
     private static boolean useSilent = false;
 
+    public static void setSilentMode(boolean useSilent)
+    {
+        AudioController.useSilent = useSilent;
+    }
     private static AudioManager getManager(Context context)
     {
         AudioManager audioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);

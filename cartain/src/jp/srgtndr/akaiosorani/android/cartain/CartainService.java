@@ -90,7 +90,7 @@ public class CartainService extends Service {
     private void startCartain()
     {
         synchronized (VIEW_CONTROL) {
-            CartainView v = CartainView.createView(getApplicationContext());
+            CartainView v = CartainView.createView(getApplicationContext(), Preferences.isIconOnLeft(getApplicationContext()));
             v.setOnTouchListener(new OnTouchListener() {
                 public boolean onTouch(View v, MotionEvent event) {
                     if(event.getAction() == MotionEvent.ACTION_DOWN) {

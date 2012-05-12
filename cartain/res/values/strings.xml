@@ -49,22 +49,31 @@
     
     <!-- preferences -->
     <string name="pref_general">Genral settings</string>
+    <string name="pref_key_startup">startup_on_boot</string>
     <string name="pref_title_startup">Startup on boot</string>
     <string name="pref_summary_startup">whether start up on boot or not</string>
-    <string name="pref_key_startup">startup_on_boot</string>
+    <string name="pref_key_position">pref_position</string>
     <string name="pref_title_position_list">Icon position</string>
     <string name="pref_summary_position_list">Specify icon position on the screen</string>
+
     <string name="pref_brightness">Brightness settings</string>
     <string name="pref_key_bright_with_dialog">bright_with_dialog</string>
     <string name="pref_title_bright_with_dialog">Bright with dialog</string>
     <string name="pref_summary_bright_with_dialog">Bright a setting screen when opening</string>
+    <string name="pref_key_brightness">brightness</string>
+    <string name="pref_title_brightness">Brightness</string>
+    <string name="pref_summary_brightness">Brightness settings when opening</string>
     <string name="pref_key_revert_brightness">revert_brightness</string>
     <string name="pref_title_revert_brightness">Revert brightness</string>
     <string name="pref_summary_revert_brightness">Revert screen brightness when closing</string>
+
     <string name="pref_others">Other settings</string>
     <string name="pref_key_show_battery">show_battery</string>
     <string name="pref_title_show_battery">Show Batery info</string>
     <string name="pref_summary_show_battery">Display battery info on the icon</string>
+    <string name="pref_key_silent_mode">silent_mode</string>
+    <string name="pref_title_silent_mode">Silent behavior</string>
+    <string name="pref_summary_silent_mode">Setting manner or silent with speaker off</string>
     <!-- messages -->
     <string name="alert_enable_data">Enable 3G data traffic</string>
     

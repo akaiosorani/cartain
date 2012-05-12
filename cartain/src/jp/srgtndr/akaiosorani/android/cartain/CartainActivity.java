@@ -101,9 +101,9 @@ public class CartainActivity extends Activity {
         // brightness setting when opening
         originalBrightness = BrightnessUtil.getSystemBrightness(getContentResolver());
         Log.d("cartain", String.format("original brightness: %d", originalBrightness));
-        int percent = 60;
+        int percent = Preferences.getBrightness(this);
         int value = percentToValue(percent);
-        if (value >= originalBrightness) {
+        if (Preferences.isBrightWithDialog(this) && value >= originalBrightness) {
             setBrightness(percent, true);
         } else {
             percent = valueToPercent(originalBrightness);
@@ -200,6 +200,7 @@ public class CartainActivity extends Activity {
         mannerButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                AudioController.setSilentMode(!Preferences.isMannerMode(CartainActivity.this));
                 AudioController.setRingerEnabled(CartainActivity.this, !AudioController.isRinger(CartainActivity.this));
             }
         });
@@ -240,6 +241,10 @@ public class CartainActivity extends Activity {
                 setBrightness(progress+1, false);
             }
         });
+
+        // revert check box 
+        CheckBox revertSetting = (CheckBox)findViewById(R.id.revert_brightness);
+        revertSetting.setChecked(Preferences.isRevertBrightness(this));
 
         // close this activity
         Button closeButton = (Button)findViewById(R.id.close_button);
@@ -363,9 +368,11 @@ public class CartainActivity extends Activity {
     private void setStartAnimation()
     {
         // set animation for opening
+        boolean isIconOnLeft = Preferences.isIconOnLeft(this);
+        float direction = isIconOnLeft ? -1.0f : 1.0f;
         TranslateAnimation animation = 
                 new TranslateAnimation(
-                    Animation.RELATIVE_TO_PARENT, -1.0f,
+                    Animation.RELATIVE_TO_PARENT, direction,
                     Animation.RELATIVE_TO_PARENT, 0.0f, 
                     Animation.RELATIVE_TO_PARENT, 0.0f,
                     Animation.RELATIVE_TO_PARENT, 0.0f);
@@ -376,7 +383,7 @@ public class CartainActivity extends Activity {
     }
     private void revertBrightness()
     {
-        CheckBox revertClosing = (CheckBox)findViewById(R.id.revert_brightness);
+    	CheckBox revertClosing = (CheckBox)findViewById(R.id.revert_brightness);
         Log.d("cartain", String.format("original brightness: %d current: %d", originalBrightness, BrightnessUtil.getSystemBrightness(getContentResolver())));
         if (revertClosing.isChecked()) {
             BrightnessUtil.setSystemBrightness(getContentResolver(), getWindow(), originalBrightness);

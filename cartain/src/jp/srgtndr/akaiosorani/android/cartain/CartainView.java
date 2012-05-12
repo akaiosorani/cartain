@@ -69,7 +69,7 @@ public class CartainView extends FrameLayout {
         label.setText(AppInfo.getMemoryInfo(getContext()));
 */
     }
-    public static CartainView createView(Context context) {
+    public static CartainView createView(Context context, boolean isIconOnLeft) {
         CartainView v = new CartainView(context);
         WindowManager wm = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
 
@@ -83,7 +83,8 @@ public class CartainView extends FrameLayout {
         params.x = 0;
         params.y = 0;
         params.alpha = 0.3f;
-        params.gravity = Gravity.LEFT  |Gravity.CENTER_VERTICAL;
+        
+        params.gravity = (isIconOnLeft ? Gravity.LEFT : Gravity.RIGHT) |Gravity.CENTER_VERTICAL;
         wm.addView(v, params);
         Log.d("cartain", "add to wm");
         view = v;

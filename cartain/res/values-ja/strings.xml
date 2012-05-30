@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+/*
+ * Copyright 2012 akaiosorani(akaiosorani@gmail.com)
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
+ -->
+<resources>
+    <string name="app_name">Cartain</string>
+    <!-- common  -->
+    <string name="close_button">閉じる</string>
+    <string name="exit_button">終了</string>
+
+    <!--  menu -->
+    <string name="menu_preferences">設定</string>
+    
+    <!--  main activity -->
+    <string name="bt_button_description">BluetoothのOn/Off</string>
+    <string name="data_button_description">データ通信のOn/Off</string>
+    <string name="wifi_button_description">WifiのOn/Off</string>
+    <string name="gps_button_description">GPS設定画面の呼出</string>
+    <string name="manner_button_description">マナーモードのOn/Off</string>
+    <string name="autorotate_button_description">画面の自動回転のOn/Off</string>
+    <string name="flight_button_description">フライトモードのOn/Off</string>
+    
+    <string name="brightness_hint">画面の明るさ(%)</string>
+
+    <!-- settings acitivity -->
+    <string name="auto_brightness">自動</string>
+    <string name="revert_brightness">閉じる際に明るさを戻す</string>
+    <string name="brightness">明るさ</string>
+    <string name="battery">バッテリ</string>
+    
+    <!-- preferences -->
+    <string name="pref_general">一般設定</string>
+    <string name="pref_title_startup">自動スタート</string>
+    <string name="pref_summary_startup">起動時の自動スタート設定</string>
+    <string name="pref_title_position_list">アイコン位置</string>
+    <string name="pref_summary_position_list">画面上の設定呼出アイコン表示位置</string>
+
+    <string name="pref_brightness">明るさ関連</string>
+    <string name="pref_title_bright_with_dialog">設定画面を明るく</string>
+    <string name="pref_summary_bright_with_dialog">設定ダイアログ表示の際に明るさを変更するかどうか</string>
+    <string name="pref_title_brightness">明るさ(％)</string>
+    <string name="pref_summary_brightness">設定ダイアログ表示時の明るさ</string>
+    <string name="pref_title_revert_brightness">明るさを戻す</string>
+    <string name="pref_summary_revert_brightness">設定ダイアログを閉じる際に明るさを元に戻すかどうか</string>
+
+    <string name="pref_others">その他の設定</string>
+    <string name="pref_title_show_battery">バッテリ情報の表示</string>
+    <string name="pref_summary_show_battery">アイコン上にバッテリ情報を表示する</string>
+    <string name="pref_title_silent_mode">無音時の設定</string>
+    <string name="pref_summary_silent_mode">マナーモード／サイレントのいずれか</string>
+
+    <!-- messages -->
+    <string name="alert_enable_data">データ通信を有効にしますか？</string>
+
+    <!-- Don't translation below staff.   -->
+    <!-- preferences key  -->
+    <!-- 設定キー（翻訳禁止）  -->
+    <string name="pref_key_startup">startup_on_boot</string>
+    <string name="pref_key_position">pref_position</string>
+    <string name="pref_key_bright_with_dialog">bright_with_dialog</string>
+    <string name="pref_key_brightness">brightness</string>
+    <string name="pref_key_revert_brightness">revert_brightness</string>
+    <string name="pref_key_show_battery">show_battery</string>
+    <string name="pref_key_silent_mode">silent_mode</string>
+</resources>

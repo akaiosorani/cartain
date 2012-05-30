@@ -24,9 +24,48 @@ public class Preferences {
     private static final boolean DEFAULT_STARTUP_ON_BOOT = false;
     private static final boolean DEFAULT_BRIGHT_WITH_DIALOG = true;
     private static final boolean DEFAULT_REVERT_BRIGHTNESS = true;
+    private static final boolean DEFAULT_SHOW_BATTERY = false;
     private static final int DEFAULT_BRIGHTNESS = 60;
     private static SharedPreferences getSharedPreferences(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context);
+    }
+    
+    public static void setDefaultValue(Context context)
+    {
+        SharedPreferences prefs = getSharedPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        // start up on boot
+        String key = context.getString(R.string.pref_key_startup);
+        editor.putBoolean(key, prefs.getBoolean(key, DEFAULT_STARTUP_ON_BOOT));
+
+        // icon position
+        key = context.getString(R.string.pref_key_position);
+        String[] values = context.getResources().getStringArray(R.array.pref_values_position);
+        editor.putString(key, prefs.getString(key, values[0]));
+
+        // brightness 
+        key = context.getString(R.string.pref_key_bright_with_dialog);
+        editor.putBoolean(key, prefs.getBoolean(key, DEFAULT_BRIGHT_WITH_DIALOG));
+
+        // brightness value
+        key = context.getString(R.string.pref_key_brightness);
+        editor.putString(key, prefs.getString(key, new Integer(DEFAULT_BRIGHTNESS).toString()));
+
+        // revert brightness
+        key = context.getString(R.string.pref_key_revert_brightness);
+        editor.putBoolean(key, prefs.getBoolean(key, DEFAULT_REVERT_BRIGHTNESS));
+
+        // battery
+        key = context.getString(R.string.pref_key_show_battery);
+        editor.putBoolean(key, prefs.getBoolean(key, DEFAULT_SHOW_BATTERY));
+
+        // silent/manner
+        key = context.getString(R.string.pref_key_silent_mode);
+        values = context.getResources().getStringArray(R.array.pref_values_silent);
+        editor.putString(key, prefs.getString(key, values[0]));
+
+        editor.commit();
     }
 
     public static boolean isStartupOnBoot(Context context)

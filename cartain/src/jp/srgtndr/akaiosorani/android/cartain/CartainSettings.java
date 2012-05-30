@@ -25,9 +25,10 @@ public class CartainSettings extends PreferenceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // set default value if value is empty
+        Preferences.setDefaultValue(getApplicationContext());
         addPreferencesFromResource(R.layout.preferences);
         
-        // TODO set default value if value is empty
         // TODO check settings value 
     }
 }

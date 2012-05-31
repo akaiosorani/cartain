@@ -38,7 +38,8 @@
             android:title="@string/pref_title_bright_with_dialog"
             android:summary="@string/pref_summary_bright_with_dialog"  />
         <!-- brightness settings for opening  -->
-        <EditTextPreference
+        <jp.srgtndr.akaiosorani.android.util.SeekbarPreference
+            android:id="@+id/pref_key_brightness"
             android:key="@string/pref_key_brightness"
             android:title="@string/pref_title_brightness"
             android:summary="@string/pref_summary_brightness" />

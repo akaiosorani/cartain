@@ -50,7 +50,7 @@ public class Preferences {
 
         // brightness value
         key = context.getString(R.string.pref_key_brightness);
-        editor.putString(key, prefs.getString(key, new Integer(DEFAULT_BRIGHTNESS).toString()));
+        editor.putInt(key, prefs.getInt(key, DEFAULT_BRIGHTNESS));
 
         // revert brightness
         key = context.getString(R.string.pref_key_revert_brightness);
@@ -86,16 +86,9 @@ public class Preferences {
     public static int getBrightness(Context context)
     {
         SharedPreferences prefs = getSharedPreferences(context);
-        String brightnessSetting = prefs.getString(context.getString(R.string.pref_key_brightness), new Integer(DEFAULT_BRIGHTNESS).toString());
-        int brightness = DEFAULT_BRIGHTNESS;
-        try
-        {
-            brightness = Integer.valueOf(brightnessSetting);
-            if (brightness > 100) brightness = 100;
-            if (brightness < 5) brightness = 5;
-        }catch(NumberFormatException ex)
-        {
-        }
+        int brightness = prefs.getInt(context.getString(R.string.pref_key_brightness), DEFAULT_BRIGHTNESS);
+        if (brightness > 100) brightness = 100;
+        if (brightness < 5) brightness = 5;
         return brightness;
     }
     public static boolean isIconOnLeft(Context context)

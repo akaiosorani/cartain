@@ -65,15 +65,4 @@
 
     <!-- messages -->
     <string name="alert_enable_data">データ通信を有効にしますか？</string>
-
-    <!-- Don't translation below staff.   -->
-    <!-- preferences key  -->
-    <!-- 設定キー（翻訳禁止）  -->
-    <string name="pref_key_startup">startup_on_boot</string>
-    <string name="pref_key_position">pref_position</string>
-    <string name="pref_key_bright_with_dialog">bright_with_dialog</string>
-    <string name="pref_key_brightness">brightness</string>
-    <string name="pref_key_revert_brightness">revert_brightness</string>
-    <string name="pref_key_show_battery">show_battery</string>
-    <string name="pref_key_silent_mode">silent_mode</string>
 </resources>

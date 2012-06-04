@@ -23,8 +23,8 @@
     <string name="exit_button">Exit</string>
 
     <!--  menu -->
-    <string name="menu_preferences">preferences</string>
-    
+    <string name="menu_preferences">Preferences</string>
+
     <!--  main activity -->
     <string name="bt_button_description">On/Off for Bluetooth functionality</string>
     <string name="data_button_description">On/Off for 3G/4G data traffic</string>
@@ -34,18 +34,18 @@
     <string name="autorotate_button_description">On/Off for auto screen rotation</string>
     <string name="flight_button_description">On/Off for flight mode</string>
     
-    <string name="brightness_hint">brightness(%)</string>
+    <string name="brightness_hint">Brightness(%)</string>
 
     <!-- settings acitivity -->
     <string name="auto_brightness">auto</string>
-    <string name="revert_brightness">revert brightness when closing</string>
-    <string name="brightness">brightness</string>
-    <string name="battery">battery</string>
+    <string name="revert_brightness">Revert brightness when closing</string>
+    <string name="brightness">Brightness</string>
+    <string name="battery">Battery</string>
     
     <!-- preferences -->
     <string name="pref_general">Genral settings</string>
     <string name="pref_title_startup">Startup on boot</string>
-    <string name="pref_summary_startup">whether start up on boot or not</string>
+    <string name="pref_summary_startup">Whether start up on boot or not</string>
     <string name="pref_title_position_list">Icon position</string>
     <string name="pref_summary_position_list">Specify icon position on the screen</string>
 
@@ -63,5 +63,5 @@
     <string name="pref_title_silent_mode">Silent behavior</string>
     <string name="pref_summary_silent_mode">Setting manner or silent with speaker off</string>
     <!-- messages -->
-    <string name="alert_enable_data">Enable 3G data traffic</string>
+    <string name="alert_enable_data">Enable 3G data traffic?</string>
 </resources>

@@ -16,6 +16,7 @@
 package jp.srgtndr.akaiosorani.android.cartain;
 
 import jp.srgtndr.akaiosorani.android.cartain.R;
+import jp.srgtndr.akaiosorani.android.util.SeekbarPreference;
 import android.os.Bundle;
 
 import android.preference.PreferenceActivity;
@@ -28,7 +29,9 @@ public class CartainSettings extends PreferenceActivity {
         // set default value if value is empty
         Preferences.setDefaultValue(getApplicationContext());
         addPreferencesFromResource(R.layout.preferences);
-        
+        SeekbarPreference pref = (SeekbarPreference)findPreference(getString(R.string.pref_key_brightness));
+        pref.setRange(5, 100);
+
         // TODO check settings value 
     }
 }

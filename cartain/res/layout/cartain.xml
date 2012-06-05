@@ -102,9 +102,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:padding="5dp"
-          android:layout_weight="1"
-          android:max="99"
-          android:progress="50" />
+          android:layout_weight="1" />
       <!-- TODO fix layout balance  -->
       <EditText
           android:id="@+id/brightness_value"

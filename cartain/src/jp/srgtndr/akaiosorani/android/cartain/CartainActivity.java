@@ -66,6 +66,9 @@ import android.widget.TextView;
 public class CartainActivity extends Activity {
     private final static int VIEW_DURATION = 800;
 
+    private final static int BRIGHTNESS_PERCENT_MIN = 5;
+    private final static int BRIGHTNESS_PERCENT_MAX = 100;
+
     private final Messenger messnger = new Messenger(new IncomingHandler());
 
     private Messenger serviceMessenger;
@@ -227,6 +230,7 @@ public class CartainActivity extends Activity {
 
         // set seekbar handler for brightness cotnrol
         SeekBar brightnessSlider = (SeekBar)findViewById(R.id.brightness_slider);
+        brightnessSlider.setMax(BRIGHTNESS_PERCENT_MAX - BRIGHTNESS_PERCENT_MIN);
         brightnessSlider.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
@@ -238,7 +242,8 @@ public class CartainActivity extends Activity {
             
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                setBrightness(progress+1, false);
+                int percent = progressToPercent(progress);
+                setBrightness(percent, false);
             }
         });
 
@@ -523,9 +528,10 @@ public class CartainActivity extends Activity {
 
     private void setBrightnessInfo(int percent, boolean updateSeekbar)
     {
+        int progress = percentToProgress(percent);
         if (updateSeekbar){
             SeekBar bar = (SeekBar)findViewById(R.id.brightness_slider);
-            bar.setProgress(percent);
+            bar.setProgress(progress);
         }
         TextView text = (TextView)findViewById(R.id.brightness_value);
         String t = Integer.toString(percent);
@@ -552,4 +558,15 @@ public class CartainActivity extends Activity {
         return p;
     }
 
+    private static int percentToProgress(int percent)
+    {
+        int max = BRIGHTNESS_PERCENT_MAX;
+        int min = BRIGHTNESS_PERCENT_MIN;
+        int p = (percent > max) ? max : ((percent < min) ? min : percent);
+        return p - min;
+    }
+    private static int progressToPercent(int progress)
+    {
+        return BRIGHTNESS_PERCENT_MIN + progress;
+    }
 }

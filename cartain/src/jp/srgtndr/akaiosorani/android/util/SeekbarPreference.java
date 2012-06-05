@@ -21,6 +21,7 @@ import android.preference.DialogPreference;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -29,19 +30,35 @@ import android.widget.TextView;
 
 public class SeekbarPreference extends DialogPreference {
 
-    private int minValue = 0;
-    private int maxValue = 100;
+    public static final int MIN_VALUE = 0;
+    public static final int MAX_VALUE = 100;
     
+    private int minValue = MIN_VALUE;
+    private int maxValue = MAX_VALUE;
+
     private SeekBar bar;
     public SeekbarPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         setPersistent(true);
     }
 
-    public void setMinMaxValue(int min, int max)
+    public void setMin(int min)
     {
-        minValue = min;
+        this.minValue = min;
+    }
+    public void setMax(int max)
+    {
+        this.maxValue = max;
+    }
+
+    public void setRange(int min, int max)
+    {
+        minValue = Math.min(min, max);
         maxValue = Math.max(min, max);
+    }
+    @Override
+    protected View onCreateView(ViewGroup parent) {
+        return super.onCreateView(parent);
     }
 
     @Override
@@ -73,11 +90,12 @@ public class SeekbarPreference extends DialogPreference {
         final EditText currentValue = new EditText(getContext());
         currentValue.setEnabled(false);
         currentValue.setText(String.format("%d", getProgress(defaultValue)));
-        LayoutParams params = new LayoutParams(0, LayoutParams.WRAP_CONTENT, 1);
+        LayoutParams params = new LayoutParams(25, LayoutParams.WRAP_CONTENT, 1);
         currentValue.setLayoutParams(params);
         currentValue.setGravity(Gravity.CENTER | Gravity.RIGHT);
 
         bar = new SeekBar(getContext());
+        bar.setPadding(5, 5, 5, 5);
         bar.setMax(maxValue - minValue);
         bar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -93,7 +111,6 @@ public class SeekbarPreference extends DialogPreference {
         });
         bar.setProgress(getProgress(defaultValue));
         bar.setLayoutParams(new LayoutParams(0, LayoutParams.WRAP_CONTENT, 4));
-
 
         container.addView(bar);
         container.addView(currentValue);

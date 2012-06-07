@@ -15,6 +15,7 @@
  */
 package jp.srgtndr.akaiosorani.android.cartain.controller;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -22,11 +23,13 @@ import android.content.Context;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.telephony.TelephonyManager;
 
 public class DataTrafficController {
 
     private static int TARGET_DEVICE_TYPE = ConnectivityManager.TYPE_MOBILE;
+    private static String TARGET_DEVICE_TYPE_NAME = "mobile";
 
     private static String ENABLE_METHOD_NAME = "enableDataConnectivity";
     private static String DISABLE_METHOD_NAME = "disableDataConnectivity";
@@ -37,33 +40,33 @@ public class DataTrafficController {
         return manager;
     }
 
-    private static NetworkInfo getNetworkInfo(Context context, int deviceType)
+    private static NetworkInfo getNetworkInfo(Context context, int deviceType, String deviceTypeName)
     {
         ConnectivityManager manager = getManager(context);
         NetworkInfo[] networks = manager.getAllNetworkInfo();
         for(NetworkInfo info : networks)
         {
-            if (info.getType() == deviceType)  {
+            if (info.getType() == deviceType && info.getTypeName().equals(deviceTypeName)) {
                 return info;
             }
         }
         return null;
     }
 
-    public static boolean isAvailable(Context context) {
-        NetworkInfo info = getNetworkInfo(context, TARGET_DEVICE_TYPE);
-        return (info != null) && info.isAvailable();
+    public static boolean isConnected(Context context) {
+        NetworkInfo info = getNetworkInfo(context, TARGET_DEVICE_TYPE, TARGET_DEVICE_TYPE_NAME);
+        return (info != null) && info.isAvailable() && info.isConnected();
     }
 
-    public static boolean isDevice(Context context)
+    public static boolean isDeviceAvailable(Context context)
     {
-        NetworkInfo info = getNetworkInfo(context, TARGET_DEVICE_TYPE);
-        return (info != null);
+        NetworkInfo info = getNetworkInfo(context, TARGET_DEVICE_TYPE, TARGET_DEVICE_TYPE_NAME);
+        return (info != null) && info.isAvailable();
     }
 
     public static NetworkInfo.State getState(Context context)
     {
-        NetworkInfo info = getNetworkInfo(context, TARGET_DEVICE_TYPE);
+        NetworkInfo info = getNetworkInfo(context, TARGET_DEVICE_TYPE, TARGET_DEVICE_TYPE_NAME);
         return (info != null) ? info.getState() : NetworkInfo.State.UNKNOWN;
     }
 
@@ -73,6 +76,20 @@ public class DataTrafficController {
     }
     
     public static void setMobileEnabled(Context context, boolean enabled)
+    {
+        int api = Build.VERSION.SDK_INT;
+        if (api >= 9)
+        {
+            setMobileEnabledGB(context, enabled);
+        } else if(api == 8){
+            setMobileEnabledFroyo(context, enabled);
+        } else 
+        {
+            // not supported
+        }
+        
+    }
+    private static void setMobileEnabledFroyo(Context context, boolean enabled)
     {
         TelephonyManager manager = getTelephoneyManager(context);
         boolean current = (manager.getDataState() == TelephonyManager.DATA_CONNECTED);
@@ -94,22 +111,43 @@ public class DataTrafficController {
             connectMethod.setAccessible(true);
             connectMethod.invoke(iTelephony);
         } catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (SecurityException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (NoSuchMethodException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IllegalArgumentException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IllegalAccessException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (InvocationTargetException e) {
-            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    
+    private static void setMobileEnabledGB(Context context, boolean enabled)
+    {
+        ConnectivityManager manager = getManager(context);
+        try {
+            Field serviceField = manager.getClass().getDeclaredField("mService");
+            serviceField.setAccessible(true);
+            Object iConnectivityManager = serviceField.get(manager);
+            @SuppressWarnings("rawtypes")
+            Class iConnectivityManagerClass = iConnectivityManager.getClass();
+            Method setMobileDataEnabledMethod = iConnectivityManagerClass.getDeclaredMethod("setMobileDataEnabled", Boolean.TYPE);
+            setMobileDataEnabledMethod.setAccessible(true);
+            setMobileDataEnabledMethod.invoke(iConnectivityManager, enabled);
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+           e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
     }

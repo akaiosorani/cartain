@@ -127,7 +127,7 @@ public class CartainActivity extends Activity {
                 if (state == NetworkInfo.State.UNKNOWN) {
                     return;
                 }
-                boolean current = DataTrafficController.isAvailable(CartainActivity.this);
+                boolean current = DataTrafficController.isConnected(CartainActivity.this);
                 if (!current) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(CartainActivity.this);
                     builder.setMessage(CartainActivity.this.getText(R.string.alert_enable_data))
@@ -148,7 +148,7 @@ public class CartainActivity extends Activity {
                 }
             }
         });
-        if (!DataTrafficController.isDevice(this)) 
+        if (!DataTrafficController.isDeviceAvailable(this)) 
         {
             setButtonEnabled(dataButton, false);
         }
@@ -495,7 +495,7 @@ public class CartainActivity extends Activity {
     private void updateButtonStatus()
     {
         ImageButton dataButton = (ImageButton)findViewById(R.id.data_button);
-        dataButton.setImageResource(DataTrafficController.isAvailable(this) ? R.drawable.data2 : R.drawable.data);
+        dataButton.setImageResource(DataTrafficController.isConnected(this) ? R.drawable.data2 : R.drawable.data);
         ImageButton btButton = (ImageButton)findViewById(R.id.bt_button);
         btButton.setImageResource(BluetoothController.isEnabled(this) ? R.drawable.bt2 : R.drawable.bt);
         ImageButton wifiButton = (ImageButton)findViewById(R.id.wifi_button);

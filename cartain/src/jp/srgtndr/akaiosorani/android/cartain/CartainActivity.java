@@ -136,10 +136,17 @@ public class CartainActivity extends Activity {
                                @Override
                                public void onClick(DialogInterface dialog, int which) {
                                    DataTrafficController.setMobileEnabled(CartainActivity.this, true);
-                                   }
-                               })
-                           .setNegativeButton(android.R.string.cancel, null);
+                                   showPreference = false;
+                               }
+                           })
+                           .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                               @Override
+                               public void onClick(DialogInterface dialog, int which) {
+                                   showPreference = false;
+                               }
+                           });
                     AlertDialog dialog = builder.create();
+                    showPreference = true;
                     dialog.show();
                 }
                 else

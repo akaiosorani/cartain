@@ -61,7 +61,8 @@ public class DataTrafficController {
     public static boolean isDeviceAvailable(Context context)
     {
         NetworkInfo info = getNetworkInfo(context, TARGET_DEVICE_TYPE, TARGET_DEVICE_TYPE_NAME);
-        return (info != null) && info.isAvailable();
+//        return (info != null) && info.isAvailable();
+        return (info != null);
     }
 
     public static NetworkInfo.State getState(Context context)

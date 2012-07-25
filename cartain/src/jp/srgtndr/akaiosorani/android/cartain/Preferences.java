@@ -44,6 +44,11 @@ public class Preferences {
         String[] values = context.getResources().getStringArray(R.array.pref_values_position);
         editor.putString(key, prefs.getString(key, values[0]));
 
+        // kick action
+        key = context.getString(R.string.pref_key_kick_action);
+        values = context.getResources().getStringArray(R.array.pref_values_kick_action);
+        editor.putString(key, prefs.getString(key,  values[0]));
+
         // brightness 
         key = context.getString(R.string.pref_key_bright_with_dialog);
         editor.putBoolean(key, prefs.getBoolean(key, DEFAULT_BRIGHT_WITH_DIALOG));
@@ -97,6 +102,12 @@ public class Preferences {
         String[] values = context.getResources().getStringArray(R.array.pref_values_position);
         String iconSetting = prefs.getString(context.getString(R.string.pref_key_position), values[0]);
         return values[0].equals(iconSetting);
+    }
+    public static boolean isKickWithClick(Context context) {
+        SharedPreferences prefs = getSharedPreferences(context);
+        String[] values = context.getResources().getStringArray(R.array.pref_values_kick_action);
+        String kickAction = prefs.getString(context.getString(R.string.pref_key_kick_action), values[0]);
+        return values[0].equals(kickAction);
     }
     public static boolean isMannerMode(Context context)
     {

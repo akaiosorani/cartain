@@ -33,4 +33,12 @@
         <item>Manner mode</item>
         <item>Silent mode</item>
     </string-array>
+    <string-array name="pref_entries_kick_action">
+        <item>Click</item>
+        <item>Long Press</item>
+    </string-array>
+    <string-array name="pref_values_kick_action">
+        <item>Click</item>
+        <item>Long Press</item>
+    </string-array>
 </resources>

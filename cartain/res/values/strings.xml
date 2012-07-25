@@ -48,6 +48,8 @@
     <string name="pref_summary_startup">Whether start up on boot or not</string>
     <string name="pref_title_position_list">Icon position</string>
     <string name="pref_summary_position_list">Specify icon position on the screen</string>
+    <string name="pref_title_kick_action">Kick action</string>
+    <string name="pref_summary_kick_action">Action for call settings screen</string>
 
     <string name="pref_brightness">Brightness settings</string>
     <string name="pref_title_bright_with_dialog">Bright with dialog</string>

@@ -21,6 +21,7 @@
     <!-- preferences key  -->
     <string name="pref_key_startup">startup_on_boot</string>
     <string name="pref_key_position">pref_position</string>
+    <string name="pref_key_kick_action">kick_action</string>
     <string name="pref_key_bright_with_dialog">bright_with_dialog</string>
     <string name="pref_key_brightness">brightness</string>
     <string name="pref_key_revert_brightness">revert_brightness</string>

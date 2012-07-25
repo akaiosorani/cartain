@@ -24,6 +24,8 @@ import android.os.Messenger;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
 
 public class CartainService extends Service {
@@ -91,12 +93,22 @@ public class CartainService extends Service {
     {
         synchronized (VIEW_CONTROL) {
             CartainView v = CartainView.createView(getApplicationContext(), Preferences.isIconOnLeft(getApplicationContext()));
-            v.setOnTouchListener(new OnTouchListener() {
-                public boolean onTouch(View v, MotionEvent event) {
-                    if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                        startSettings();
+            v.setOnClickListener(new OnClickListener() {
+                public void onClick(View v) {
+                    if (!Preferences.isKickWithClick(getApplicationContext())) {
+                        return;
                     }
-                    return true;
+                    startSettings();
+                    return;
+                }
+            });
+            v.setOnLongClickListener(new OnLongClickListener() {
+                public boolean onLongClick(View v) {
+                    if (Preferences.isKickWithClick(getApplicationContext())) {
+                        return false;
+                    }
+                    startSettings();
+                    return false;
                 }
             });
             alreadyStarted = true;

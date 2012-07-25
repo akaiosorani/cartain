@@ -30,6 +30,13 @@
                 android:entries="@array/pref_entries_position"
                 android:entryValues="@array/pref_values_position"
                 android:dialogTitle="@string/pref_title_position_list" />
+        <ListPreference
+                android:key="@string/pref_key_kick_action"
+                android:title="@string/pref_title_kick_action"
+                android:summary="@string/pref_summary_kick_action"
+                android:entries="@array/pref_entries_kick_action"
+                android:entryValues="@array/pref_values_kick_action"
+                android:dialogTitle="@string/pref_title_kick_action" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_brightness">
         <!-- brighten display when opening -->

@@ -41,13 +41,15 @@
     <string name="revert_brightness">閉じる際に明るさを戻す</string>
     <string name="brightness">明るさ</string>
     <string name="battery">バッテリ</string>
-    
+
     <!-- preferences -->
     <string name="pref_general">一般設定</string>
     <string name="pref_title_startup">自動スタート</string>
     <string name="pref_summary_startup">起動時の自動スタート設定</string>
     <string name="pref_title_position_list">アイコン位置</string>
     <string name="pref_summary_position_list">画面上の設定呼出アイコン表示位置</string>
+    <string name="pref_title_kick_action">設定画面呼出</string>
+    <string name="pref_summary_kick_action">設定画面を表示する際のアクション</string>
 
     <string name="pref_brightness">明るさ関連</string>
     <string name="pref_title_bright_with_dialog">設定画面を明るく</string>

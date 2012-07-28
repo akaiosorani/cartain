@@ -106,7 +106,7 @@ public class SeekbarPreference extends DialogPreference {
             }
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                currentValue.setText(new Integer(getValue()).toString());
+                currentValue.setText(Integer.valueOf(getValue()).toString());
             }
         });
         bar.setProgress(getProgress(defaultValue));

@@ -61,8 +61,8 @@ public class CartainView extends FrameLayout {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        Log.d("cartain", "ondraw" + new Integer(drawingCount++).toString());
 /*
+        Log.d("cartain", "ondraw" + Integer.valueOf(drawingCount++).toString());
     	super.onDraw(canvas);
         Date current = new Date(System.currentTimeMillis());
 //      label.setText(current.toLocaleString());
